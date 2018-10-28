@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="毕设,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
+<meta name="keywords" content="毕设">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://81100118.github.io/2018/10/26/hello-world/index.html">
+<meta property="og:title" content="HDR reconstruction 有关论文阅读">
+<meta property="og:url" content="https://81100118.github.io/2018/10/28/HDR-reconstruction-有关论文阅读/index.html">
 <meta property="og:site_name" content="81100118的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-26T13:04:11.892Z">
+<meta property="og:updated_time" content="2018-10-28T06:35:50.230Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="HDR reconstruction 有关论文阅读">
+<meta name="twitter:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://81100118.github.io/2018/10/26/hello-world/">
+  <link rel="canonical" href="https://81100118.github.io/2018/10/28/HDR-reconstruction-有关论文阅读/">
 
 
 
 
 
-  <title>Hello World | 81100118的博客</title>
+  <title>HDR reconstruction 有关论文阅读 | 81100118的博客</title>
   
 
 
@@ -232,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2018/10/26/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2018/10/28/HDR-reconstruction-有关论文阅读/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -249,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">HDR reconstruction 有关论文阅读</h1>
         
 
         <div class="post-meta">
@@ -261,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-26T21:04:11+08:00">
-                2018-10-26
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-28T13:20:42+08:00">
+                2018-10-28
               </time>
             
 
@@ -299,15 +300,14 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs"><a href="#HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs" class="headerlink" title="HDR image reconstruction from a single exposure using deep CNNs"></a>HDR image reconstruction from a single exposure using deep CNNs</h1><p>这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;(7)。实际代码中用的是第二种。</p>
+<ol>
+<li><p>第一种<br>第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是eq.(2)：根据rgb通道的最大值，从[0.95,1]线性映射到[0,1]。因此如果rgb通道全小于0.95，loss就会被计为0。</p>
+</li>
+<li><p>第二种<br>第二种比较复杂，定义了illuminance 和 reflectance分量：<br>“The illumination component $I$ describes the <strong>global variations</strong>, and is responsible for the high<br>dynamic range. The reﬂectance $R$ stores information about <strong>details</strong><br>and colors.”<br>Def log illuminance: rgb通道的linear domain的值的线性组合(与{0.213, 0.715, 0.072}点乘)的对数。（原文公式(6) (7)之间）<br>Def $\log I_i$: 将图片log illuminance矩阵卷积高斯低通filter后，元素i的（对数域的）值<br>Def $\log R_{i,c}$：像素i的c通道的对数域的值减去log illuminance<br><strong>Loss func</strong>: Eq. (7). 简单来说就是 预测出的$\log I$值误差的平方 和$\log R$值误差的平方 的线性组合（线性组合系数为$\lambda$ 和$1-\lambda$），图5展示了不同$\lambda$的效果</p>
+</li>
+</ol>
+<h1 id="Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image"><a href="#Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image" class="headerlink" title="Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image"></a>Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image</h1><p>这篇文章是通过神经网络从一张LDR生成7种不同曝光度的LDR然后用传统方法合成1张HDR。</p>
 
       
     </div>
@@ -323,6 +323,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/毕设/" rel="tag"># 毕设</a>
+          
+        </div>
+      
 
       
       
@@ -332,15 +338,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/10/26/真正的hello-world/" rel="next" title="真正的hello world!">
+                <i class="fa fa-chevron-left"></i> 真正的hello world!
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/26/真正的hello-world/" rel="prev" title="真正的hello world!">
-                真正的hello world! <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -463,7 +469,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs"><span class="nav-number">1.</span> <span class="nav-text">HDR image reconstruction from a single exposure using deep CNNs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image"><span class="nav-number">2.</span> <span class="nav-text">Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image</span></a></li></ol></div>
             
 
           </div>
