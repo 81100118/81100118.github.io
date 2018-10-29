@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="81100118的博客">
 <meta property="og:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-28T09:19:17.084Z">
+<meta property="og:updated_time" content="2018-10-29T06:35:01.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDR reconstruction 有关论文阅读">
 <meta name="twitter:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
@@ -353,7 +353,8 @@
 <p>大概可以理解成导数的和</p>
 <p>这个loss没啥特别的。关键是这个网络不是用来生成HDR的，所以好像和我们没啥关系</p>
 <p>问题：$y_i$具体指什么？论文里好像没说</p>
-<h2 id="ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content"><a href="#ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content" class="headerlink" title="ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content"></a>ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content</h2>
+<h2 id="ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content"><a href="#ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content" class="headerlink" title="ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content"></a>ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content</h2><p>Loss function: L1 Norm, （这篇文章说频繁使用L2容易导致图片模糊），加上{1 - 预测(R, G, B)向量与实际(R, G, B)向量的夹角的余弦}。</p>
+
       
     </div>
     
@@ -472,7 +473,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
