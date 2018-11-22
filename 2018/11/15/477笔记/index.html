@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1 基础 算法记得写Input和Output algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法 BST: 左子树所有节点&amp;lt;根&amp;lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子算法： MST: 贪心：kruskal，how to detect cycles? 提">
+<meta name="description" content="1 基础 算法记得写Input和Output algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法 BST: 左子树所有节点&amp;lt;根&amp;lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子">
 <meta name="keywords" content="477">
 <meta property="og:type" content="article">
 <meta property="og:title" content="477笔记">
 <meta property="og:url" content="https://81100118.github.io/2018/11/15/477笔记/index.html">
 <meta property="og:site_name" content="81100118的博客">
-<meta property="og:description" content="1 基础 算法记得写Input和Output algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法 BST: 左子树所有节点&amp;lt;根&amp;lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子算法： MST: 贪心：kruskal，how to detect cycles? 提">
+<meta property="og:description" content="1 基础 算法记得写Input和Output algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法 BST: 左子树所有节点&amp;lt;根&amp;lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-16T04:27:37.986Z">
+<meta property="og:updated_time" content="2018-11-16T16:13:33.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="477笔记">
-<meta name="twitter:description" content="1 基础 算法记得写Input和Output algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法 BST: 左子树所有节点&amp;lt;根&amp;lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子算法： MST: 贪心：kruskal，how to detect cycles? 提">
+<meta name="twitter:description" content="1 基础 算法记得写Input和Output algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法 BST: 左子树所有节点&amp;lt;根&amp;lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子">
 
 
 
@@ -323,7 +323,8 @@
         <h2 id="1-基础"><a href="#1-基础" class="headerlink" title="1 基础"></a>1 基础</h2><ul>
 <li>算法记得写Input和Output</li>
 <li>algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法</li>
-<li>BST: 左子树所有节点&lt;根&lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子<br>算法：</li>
+<li>BST: 左子树所有节点&lt;根&lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子<a id="more"></a>
+算法：</li>
 <li>MST: 贪心：kruskal，how to detect cycles? 提到union-find structure. 每堆连在一起的节点形成一棵树。一开始每个节点都是一棵树，父是自己。 If the edge does not cause a cycle（根不相同的话，就not cause a cycle）, we add the edge and <strong>make union</strong> on the two different components connected by the edge. detect cycle: O(log|V|). kruskal总复杂度：|E|log|E|+|E|log|V| = |E|log|V|</li>
 <li>MST: Prim: D为某节点和所有相邻节点的边的最短边长。选一个起始节点s，令D(s) = 0, 其他节点D = inf，循环：从未连接的节点中选择D最小的，更新所有未连接节点的D及其predecessor；选择最小D的节点，连接它和它的predecessor，循环结束</li>
 <li>counting inversions: inversion def: a[0..n-1]中，如果a[i]&gt;a[j]，i&lt;j，那么(a[i], a[j])这个pair是一个inversion. 算法：divide and conquer, nr_inv(total) = nr_inv(L) + nr_inv(R) + nr_inv(LR merge时产生的inv)。 merge时，进行排序，与此同时计数 merge产生的inversion。</li>
@@ -370,7 +371,7 @@
 <li>SAT, 3-SAT</li>
 <li>k-clique （3-SAT如何规约到k-clique）</li>
 <li>k-ind set （和k-clique相反）</li>
-<li>k-vertex cover （）</li>
+<li>k-vertex cover （）<br><strong>考后补充：</strong>可以看一下这几个NPC问题是怎么互相约化的</li>
 </ul>
 </li>
 </ul>
