@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="81100118的博客">
 <meta property="og:description" content="1 基础 算法记得写Input和Output algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法 BST: 左子树所有节点&amp;lt;根&amp;lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-16T16:13:33.245Z">
+<meta property="og:updated_time" content="2019-01-21T12:30:09.389Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="477笔记">
 <meta name="twitter:description" content="1 基础 算法记得写Input和Output algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法 BST: 左子树所有节点&amp;lt;根&amp;lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子">
@@ -293,6 +293,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程/" itemprop="url" rel="index">
+                    <span itemprop="name">课程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -323,8 +345,11 @@
         <h2 id="1-基础"><a href="#1-基础" class="headerlink" title="1 基础"></a>1 基础</h2><ul>
 <li>算法记得写Input和Output</li>
 <li>algorithm和heuristic的区别：heuristic是一个idea，guide，不保证一定有好的解法</li>
-<li>BST: 左子树所有节点&lt;根&lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子<a id="more"></a>
-算法：</li>
+<li>BST: 左子树所有节点&lt;根&lt;右，remove:若有1个子，则由父接管子；若有2个子，则和子树的最大节点（必定是叶子）交换，再删除被交换的叶子</li>
+</ul>
+<a id="more"></a>
+<p>算法：</p>
+<ul>
 <li>MST: 贪心：kruskal，how to detect cycles? 提到union-find structure. 每堆连在一起的节点形成一棵树。一开始每个节点都是一棵树，父是自己。 If the edge does not cause a cycle（根不相同的话，就not cause a cycle）, we add the edge and <strong>make union</strong> on the two different components connected by the edge. detect cycle: O(log|V|). kruskal总复杂度：|E|log|E|+|E|log|V| = |E|log|V|</li>
 <li>MST: Prim: D为某节点和所有相邻节点的边的最短边长。选一个起始节点s，令D(s) = 0, 其他节点D = inf，循环：从未连接的节点中选择D最小的，更新所有未连接节点的D及其predecessor；选择最小D的节点，连接它和它的predecessor，循环结束</li>
 <li>counting inversions: inversion def: a[0..n-1]中，如果a[i]&gt;a[j]，i&lt;j，那么(a[i], a[j])这个pair是一个inversion. 算法：divide and conquer, nr_inv(total) = nr_inv(L) + nr_inv(R) + nr_inv(LR merge时产生的inv)。 merge时，进行排序，与此同时计数 merge产生的inversion。</li>
@@ -334,7 +359,7 @@
 <li>loglogn &lt; logn / loglogn</li>
 <li>\alpha(n): inverse ackerman’s func, 增长巨慢，只会略大于1</li>
 <li>stable marrage problem: 存在（m,w）使得m比起他老婆更喜欢w，w比起她老公更喜欢m。这就是不稳定的。Gale-Shapley算法：男人依次根据志愿求婚；女人发现求婚者比现任更好的话就换男人，否则不换。如此循环直到没有free man。复杂度：O(n^2)因为每个男人最多把所有女人都求婚一遍。</li>
-<li>log<em>: log</em>x = n, 等价于 2^(2^(2^…)) n-1个2 &lt; log* x &lt;= 2^(2^(2^…)) n个2 </li>
+<li>log*: log*x = n, 等价于 2^(2^(2^…)) n-1个2 &lt; log* x &lt;= 2^(2^(2^…)) n个2 </li>
 <li>union-find: 1次find: O(logn) m次find: O((m+n)log*n) 但不是最接近的。Inv Ackerman才是最接近的</li>
 <li>Ackerman’s func: 太复杂了。。不想看</li>
 <li>Master Theorem: T(n) = aT(n/b) + f(n) （记住顺序：a, b, f(n)）；<br>若f(n)比n^{log_b a}小，则T(n) = n^{log_b a}（记住n^{log_b a}。[怎么记：正好是上一行的顺序反一下] f(n)和他谁大，总的复杂度就是谁，可以理解为瓶颈效应）<br>​          =                          ，则T(n) = n^{log_b a} logn （记住a=b时，复杂度是nlogn）<br>​          >                          ，则T(n) = f(n)  （和(1)类似，瓶颈效应）</li>
@@ -511,7 +536,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -522,7 +547,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

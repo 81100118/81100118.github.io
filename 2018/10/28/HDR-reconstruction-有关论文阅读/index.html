@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="毕设,">
+  <meta name="keywords" content="450,">
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
-<meta name="keywords" content="毕设">
+<meta name="keywords" content="450">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDR reconstruction 有关论文阅读">
 <meta property="og:url" content="https://81100118.github.io/2018/10/28/HDR-reconstruction-有关论文阅读/index.html">
 <meta property="og:site_name" content="81100118的博客">
 <meta property="og:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-29T06:35:01.697Z">
+<meta property="og:updated_time" content="2019-01-21T12:26:25.053Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDR reconstruction 有关论文阅读">
 <meta name="twitter:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
@@ -305,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/毕设/" itemprop="url" rel="index">
-                    <span itemprop="name">毕设</span>
+                  <a href="/categories/课程/" itemprop="url" rel="index">
+                    <span itemprop="name">课程</span>
                   </a>
                 </span>
 
@@ -344,7 +344,10 @@
       
         <h2 id="HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs"><a href="#HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs" class="headerlink" title="HDR image reconstruction from a single exposure using deep CNNs"></a>HDR image reconstruction from a single exposure using deep CNNs</h2><p>这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;(7)。实际代码中用的是第二种。</p>
 <ol>
-<li>第一种<br>第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是eq.(2)：根据rgb通道的最大值，从[0.95,1]线性映射到[0,1]。因此如果rgb通道全小于0.95，loss就会被计为0。<a id="more"></a></li>
+<li>第一种<br>第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是eq.(2)：根据rgb通道的最大值，从[0.95,1]线性映射到[0,1]。因此如果rgb通道全小于0.95，loss就会被计为0。</li>
+</ol>
+<a id="more"></a>
+<ol start="2">
 <li>第二种<br>第二种比较复杂，定义了illuminance 和 reflectance分量：<br>“The illumination component $I$ describes the <strong>global variations</strong>, and is responsible for the high<br>dynamic range. The reflectance $R$ stores information about <strong>details</strong><br>and colors.”<br>Def log illuminance: rgb通道的linear domain的值的线性组合(与{0.213, 0.715, 0.072}点乘)的对数。（原文公式(6) (7)之间）<br>Def $\log I_i$: 将图片log illuminance矩阵卷积高斯低通filter后，元素i的（对数域的）值<br>Def $\log R_{i,c}$：像素i的c通道的对数域的值减去log illuminance<br><strong>Loss func</strong>: Eq. (7). 简单来说就是 预测出的$\log I$值误差的平方 和$\log R$值误差的平方 的线性组合（线性组合系数为$\lambda$ 和$1-\lambda$），图5展示了不同$\lambda$的效果</li>
 </ol>
 <h2 id="Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image"><a href="#Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image" class="headerlink" title="Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image"></a>Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image</h2><p>这篇文章是通过神经网络从一张LDR生成7种不同曝光度的LDR然后用传统方法合成1张HDR。</p>
@@ -371,7 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/毕设/" rel="tag"># 毕设</a>
+            <a href="/tags/450/" rel="tag"># 450</a>
           
         </div>
       
@@ -484,7 +487,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -495,7 +498,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
