@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="81100118的博客">
 <meta property="og:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-21T12:26:25.053Z">
+<meta property="og:updated_time" content="2019-02-23T15:28:47.400Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDR reconstruction 有关论文阅读">
 <meta name="twitter:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
@@ -347,12 +347,12 @@
 <li>第一种<br>第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是eq.(2)：根据rgb通道的最大值，从[0.95,1]线性映射到[0,1]。因此如果rgb通道全小于0.95，loss就会被计为0。</li>
 </ol>
 <a id="more"></a>
-<ol start="2">
+<ol>
 <li>第二种<br>第二种比较复杂，定义了illuminance 和 reflectance分量：<br>“The illumination component $I$ describes the <strong>global variations</strong>, and is responsible for the high<br>dynamic range. The reflectance $R$ stores information about <strong>details</strong><br>and colors.”<br>Def log illuminance: rgb通道的linear domain的值的线性组合(与{0.213, 0.715, 0.072}点乘)的对数。（原文公式(6) (7)之间）<br>Def $\log I_i$: 将图片log illuminance矩阵卷积高斯低通filter后，元素i的（对数域的）值<br>Def $\log R_{i,c}$：像素i的c通道的对数域的值减去log illuminance<br><strong>Loss func</strong>: Eq. (7). 简单来说就是 预测出的$\log I$值误差的平方 和$\log R$值误差的平方 的线性组合（线性组合系数为$\lambda$ 和$1-\lambda$），图5展示了不同$\lambda$的效果</li>
 </ol>
 <h2 id="Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image"><a href="#Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image" class="headerlink" title="Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image"></a>Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image</h2><p>这篇文章是通过神经网络从一张LDR生成7种不同曝光度的LDR然后用传统方法合成1张HDR。</p>
 <p>Loss function (Eq. (3)) 是L1norm（误差的绝对值）加上$\hat{y_i}$的“全变差正则化项”(total variation<br>regularization)防止过拟合。这个TV regularization有点神秘，论文里没找到具体公式，扫了一眼TV相关论文，好像这只是一个类型，有各种不同的具体公式，wikipedia说1992年一篇论文提出的公式是这样</p>
-<p>$$V(y)=\sum <em>{i,j}{\sqrt {\left|y</em>{i+1,j}-y_{i,j}\right|^{2}+\left|y_{i,j+1}-y_{i,j}\right|^{2}}}$$</p>
+<p>$V(y)=\sum _{i,j}{\sqrt {\left|y_{i+1,j}-y_{i,j}\right|^{2}+\left|y_{i,j+1}-y_{i,j}\right|^{2}}}$</p>
 <p>大概可以理解成导数的和</p>
 <p>这个loss没啥特别的。关键是这个网络不是用来生成HDR的，所以好像和我们没啥关系</p>
 <p>问题：$y_i$具体指什么？论文里好像没说</p>
@@ -476,7 +476,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -498,7 +498,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -731,6 +731,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
