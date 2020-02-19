@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="450,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
+<meta name="keywords" content="450">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDR reconstruction 有关论文阅读">
+<meta property="og:url" content="https://81100118.github.io/2018/10/27/HDR-reconstruction-有关论文阅读/index.html">
+<meta property="og:site_name" content="81100118的博客">
+<meta property="og:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-23T15:28:47.400Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HDR reconstruction 有关论文阅读">
+<meta name="twitter:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://81100118.github.io/2018/10/27/HDR-reconstruction-有关论文阅读/">
+
+
+
+
+
+  <title>HDR reconstruction 有关论文阅读 | 81100118的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">81100118的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2018/10/27/HDR-reconstruction-有关论文阅读/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="81100118的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HDR reconstruction 有关论文阅读</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-28T13:20:42+08:00">
+                2018-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程/" itemprop="url" rel="index">
+                    <span itemprop="name">课程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs"><a href="#HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs" class="headerlink" title="HDR image reconstruction from a single exposure using deep CNNs"></a>HDR image reconstruction from a single exposure using deep CNNs</h2><p>这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;(7)。实际代码中用的是第二种。</p>
+<ol>
+<li>第一种<br>第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是eq.(2)：根据rgb通道的最大值，从[0.95,1]线性映射到[0,1]。因此如果rgb通道全小于0.95，loss就会被计为0。</li>
+</ol>
+<a id="more"></a>
+<ol>
+<li>第二种<br>第二种比较复杂，定义了illuminance 和 reflectance分量：<br>“The illumination component $I$ describes the <strong>global variations</strong>, and is responsible for the high<br>dynamic range. The reflectance $R$ stores information about <strong>details</strong><br>and colors.”<br>Def log illuminance: rgb通道的linear domain的值的线性组合(与{0.213, 0.715, 0.072}点乘)的对数。（原文公式(6) (7)之间）<br>Def $\log I_i$: 将图片log illuminance矩阵卷积高斯低通filter后，元素i的（对数域的）值<br>Def $\log R_{i,c}$：像素i的c通道的对数域的值减去log illuminance<br><strong>Loss func</strong>: Eq. (7). 简单来说就是 预测出的$\log I$值误差的平方 和$\log R$值误差的平方 的线性组合（线性组合系数为$\lambda$ 和$1-\lambda$），图5展示了不同$\lambda$的效果</li>
+</ol>
+<h2 id="Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image"><a href="#Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image" class="headerlink" title="Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image"></a>Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image</h2><p>这篇文章是通过神经网络从一张LDR生成7种不同曝光度的LDR然后用传统方法合成1张HDR。</p>
+<p>Loss function (Eq. (3)) 是L1norm（误差的绝对值）加上$\hat{y_i}$的“全变差正则化项”(total variation<br>regularization)防止过拟合。这个TV regularization有点神秘，论文里没找到具体公式，扫了一眼TV相关论文，好像这只是一个类型，有各种不同的具体公式，wikipedia说1992年一篇论文提出的公式是这样</p>
+<p>$V(y)=\sum _{i,j}{\sqrt {\left|y_{i+1,j}-y_{i,j}\right|^{2}+\left|y_{i,j+1}-y_{i,j}\right|^{2}}}$</p>
+<p>大概可以理解成导数的和</p>
+<p>这个loss没啥特别的。关键是这个网络不是用来生成HDR的，所以好像和我们没啥关系</p>
+<p>问题：$y_i$具体指什么？论文里好像没说</p>
+<h2 id="ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content"><a href="#ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content" class="headerlink" title="ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content"></a>ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content</h2><p>Loss function: L1 Norm, （这篇文章说频繁使用L2容易导致图片模糊），加上{1 - 预测(R, G, B)向量与实际(R, G, B)向量的夹角的余弦}。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/450/" rel="tag"># 450</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/26/真正的hello-world/" rel="next" title="真正的hello world!">
+                <i class="fa fa-chevron-left"></i> 真正的hello world!
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/28/2018上海高校日麻联赛个人赛/" rel="prev" title="2018上海高校日麻联赛个人赛">
+                2018上海高校日麻联赛个人赛 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs"><span class="nav-number">1.</span> <span class="nav-text">HDR image reconstruction from a single exposure using deep CNNs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image"><span class="nav-number">2.</span> <span class="nav-text">Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content"><span class="nav-number">3.</span> <span class="nav-text">ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
