@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文讲解了天凤牌山生成算法以及玩家对它的验证方法，并分析了天凤在保证公开公平这方面的成功之处以及欠缺。最后把天凤和雀魂进行了对比。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="天凤牌山生成算法及其验证">
+<meta property="og:url" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/index.html">
+<meta property="og:site_name" content="81100118的博客">
+<meta property="og:description" content="本文讲解了天凤牌山生成算法以及玩家对它的验证方法，并分析了天凤在保证公开公平这方面的成功之处以及欠缺。最后把天凤和雀魂进行了对比。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc1.png">
+<meta property="og:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc2.png">
+<meta property="og:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc3.png">
+<meta property="og:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc4.png">
+<meta property="og:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc7.png">
+<meta property="og:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc5.png">
+<meta property="og:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc6.png">
+<meta property="og:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc8.png">
+<meta property="og:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc9.png">
+<meta property="og:updated_time" content="2021-01-05T10:23:39.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="天凤牌山生成算法及其验证">
+<meta name="twitter:description" content="本文讲解了天凤牌山生成算法以及玩家对它的验证方法，并分析了天凤在保证公开公平这方面的成功之处以及欠缺。最后把天凤和雀魂进行了对比。">
+<meta name="twitter:image" content="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/sc1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/">
+
+
+
+
+
+  <title>天凤牌山生成算法及其验证 | 81100118的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">81100118的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2021/01/01/天凤牌山生成算法及其验证/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="81100118的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">天凤牌山生成算法及其验证</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-01-01T20:40:32+08:00">
+                2021-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/日麻/" itemprop="url" rel="index">
+                    <span itemprop="name">日麻</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文讲解了天凤牌山生成算法以及玩家对它的验证方法，并分析了天凤在保证公开公平这方面的成功之处以及欠缺。最后把天凤和雀魂进行了对比。</p>
+<a id="more"></a>
+<h2 id="天凤牌山生成算法讲解"><a href="#天凤牌山生成算法讲解" class="headerlink" title="天凤牌山生成算法讲解"></a>天凤牌山生成算法讲解</h2><p>角田在<a href="http://blog.tenhou.net/article/30503297.html" target="_blank" rel="noopener">天凤博客</a>里以代码片段的形式公开了天凤牌山生成方法。代码似乎是C和C++的混合。代码的注释不是特别详细，而且是日文的。角田也没有用通俗的语言来解释牌山生成方法。网友“畅畅”在<a href="https://www.cnblogs.com/ZCplayground/p/8157542.html" target="_blank" rel="noopener">Ta的博客</a>里给天凤牌山的代码加上了中文注释，并用通俗的语言总结了牌山生成的过程，但是有一些小错误。我直接引用Ta的博客里的代码，并加入一些注释。<br>对具体代码不感兴趣的话可以跳过。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//天凤牌山生成代码 http://tenhou.net/stat/rand/</span></span><br><span class="line"><span class="comment">// http://blog.tenhou.net/article/30503297.html</span></span><br><span class="line"><span class="comment">// 用/* */ 包括的是角田原版注释，以//打头的都是畅畅注释</span></span><br><span class="line"><span class="comment">// 注明“811注”的是81100118的注释</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SampleYamaShuffle</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *haiDisp[<span class="number">34</span>]=&#123;</span><br><span class="line">        <span class="string">"一"</span>,<span class="string">"二"</span>,<span class="string">"三"</span>,<span class="string">"四"</span>,<span class="string">"五"</span>,<span class="string">"六"</span>,<span class="string">"七"</span>,<span class="string">"八"</span>,<span class="string">"九"</span>,</span><br><span class="line">        <span class="string">"①"</span>,<span class="string">"②"</span>,<span class="string">"③"</span>,<span class="string">"④"</span>,<span class="string">"⑤"</span>,<span class="string">"⑥"</span>,<span class="string">"⑦"</span>,<span class="string">"⑧"</span>,<span class="string">"⑨"</span>,</span><br><span class="line">        <span class="string">"１"</span>,<span class="string">"２"</span>,<span class="string">"３"</span>,<span class="string">"４"</span>,<span class="string">"５"</span>,<span class="string">"６"</span>,<span class="string">"７"</span>,<span class="string">"８"</span>,<span class="string">"９"</span>,</span><br><span class="line">        <span class="string">"東"</span>,<span class="string">"南"</span>,<span class="string">"西"</span>,<span class="string">"北"</span>,<span class="string">"白"</span>,<span class="string">"發"</span>,<span class="string">"中"</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    WORD wShuffleVersionMajor=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    _MTRAND mtRoot; </span><br><span class="line">    </span><br><span class="line">    TCHAR szSeedSeqName[<span class="number">32</span>];<span class="comment">//szSeedSeqName：一个宽字符数组 内容是当前系统时间</span></span><br><span class="line">    &#123;</span><br><span class="line">        DWORD seed[MTRAND_N]; <span class="comment">/* これは公開されない*/</span></span><br><span class="line">        <span class="comment">// seed 具体的生成方式是不公开的。这里角田应该考虑到了如果公布了最初种子的生成方式，</span></span><br><span class="line">        <span class="comment">// 就可能会有人通过生成真实种子而获得牌山数据，真 “看破牌山”</span></span><br><span class="line">    </span><br><span class="line">        <span class="keyword">if</span> (<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="comment">// 实际服务器操作 省略了</span></span><br><span class="line">            HCRYPTPROV hCP; <span class="comment">/* for Win32 */</span></span><br><span class="line">    </span><br><span class="line">            <span class="keyword">if</span> (!CryptAcquireContext(&amp;hCP,<span class="literal">NULL</span>,<span class="literal">NULL</span>,PROV_RSA_FULL,<span class="number">0</span>)) <span class="keyword">throw</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (!CryptGenRandom(hCP,<span class="keyword">sizeof</span>(seed),(BYTE*)seed)) <span class="keyword">throw</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (!CryptReleaseContext(hCP,<span class="number">0</span>)) <span class="keyword">throw</span> <span class="number">0</span>; <span class="comment">//三行异常处理</span></span><br><span class="line">    </span><br><span class="line">            SYSTEMTIME st; <span class="comment">//查询系统时间</span></span><br><span class="line">            GetLocalTime(&amp;st);</span><br><span class="line">    </span><br><span class="line">            wsprintf(szSeedSeqName,_T(<span class="string">"%d.%04d.%02d%02d.%02d%02d"</span>),</span><br><span class="line">                wShuffleVersionMajor,</span><br><span class="line">                st.wYear,st.wMonth,st.wDay,st.wHour,st.wMinute); <span class="comment">//写入 szSeedSeqName</span></span><br><span class="line">    </span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"seedDailyPublic=%s"</span>,szSeedSeqName);</span><br><span class="line">    </span><br><span class="line">            <span class="keyword">if</span> (<span class="number">1</span>) <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="keyword">sizeof</span>(seed)/<span class="keyword">sizeof</span>(*seed);++i) <span class="built_in">printf</span>(<span class="string">",%08X"</span>,seed[i]);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"\r\n"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">             <span class="comment">/* 検証用の入力  szSeedSeqNameをキーに検索 */</span></span><br><span class="line">             <span class="comment">// 输入验证    // 以szSeedSeqName作为关键字搜索</span></span><br><span class="line">            <span class="comment">//（811注：这里的“検証”对玩家来说似乎无法做到，之前的注释里也说了seed是不公开的）</span></span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="keyword">sizeof</span>(seed)/<span class="keyword">sizeof</span>(*seed);++i) seed[<span class="number">0</span>]=<span class="comment">/* REPLACE HERE */</span><span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mtRoot.init_by_array(seed,<span class="keyword">sizeof</span>(seed)/<span class="keyword">sizeof</span>(*seed)); </span><br><span class="line">        <span class="comment">//mtRoot 用于作为随机数种子，进行 mt199327ar 算法的种子初始化，只进行一次初始化</span></span><br><span class="line">        <span class="comment">//综上所述： mtRoot 是一个可能以系统时间、登录名等东西进行填充，用于随机数生成算法的种子。</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> nGame=<span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(;nGame&lt;<span class="number">10</span>;++nGame)</span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">/* 配牌が１０回行われた場合*/</span>   <span class="comment">// 十场比赛 （这里角田是随便举例）</span></span><br><span class="line">        <span class="comment">// 811注：目前角田的注释是“１０回目の対戦まで”而不是“配牌が１０回行われた場合”</span></span><br><span class="line">        <span class="comment">// 811注：可能不是角田随便举例的，根据角田的“hash公开”网页，一次生成十场比赛的种子并且公开hash</span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// 循环使用 mtRoot 这个种子生成随机数</span></span><br><span class="line">        <span class="comment">// mt199327ar 算法：马特赛特旋转演算法产生一个伪随机数，一般为MtRand()。</span></span><br><span class="line">        <span class="comment">// 参考链接：http://blog.csdn.net/caimouse/article/details/55668071</span></span><br><span class="line">        <span class="comment">// 811注：现在维基百科译为“梅森旋转算法” https://zh.wikipedia.org/wiki/梅森旋转算法</span></span><br><span class="line">    </span><br><span class="line">        mtRoot.genrand_int32(); <span class="comment">/* 席順決定などで３つ消費*/</span> </span><br><span class="line">        <span class="comment">// 一场比赛用三个随机数确定座位（四个座位只需三个随机数） </span></span><br><span class="line">        mtRoot.genrand_int32();</span><br><span class="line">        mtRoot.genrand_int32(); <span class="comment">/* 三麻不使用这个 */</span></span><br><span class="line">        mtRoot.genrand_int32(); <span class="comment">/* 未使用 */</span></span><br><span class="line">    </span><br><span class="line">        _MTRAND mtLocal; </span><br><span class="line">        &#123;</span><br><span class="line">            DWORD seed[MTRAND_N]; <span class="comment">/* 136!より十分に大きく*/</span>   <span class="comment">//它比136大得多！</span></span><br><span class="line">            <span class="comment">//（811注：是比136的阶乘大得多，不是比136大得多。</span></span><br><span class="line">            <span class="comment">// 牌山一共有136!种排列，随机数种子的取值范围比136!大得多。</span></span><br><span class="line">            <span class="comment">// 如果随机数种子的取值范围比牌山的种数还少，那么牌山的某些排列永远不可能生成出来）</span></span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="keyword">sizeof</span>(seed)/<span class="keyword">sizeof</span>(*seed);++i) seed[i]=mtRoot.genrand_int32(); </span><br><span class="line">            <span class="comment">//这里仍然用 mtRoot 不断生成随机数</span></span><br><span class="line">    </span><br><span class="line">            mtLocal.init_by_array(seed,<span class="keyword">sizeof</span>(seed)/<span class="keyword">sizeof</span>(*seed));</span><br><span class="line">            <span class="comment">// 这些随机数填充 mtLocal，于是 mtLocal 相当于一个新种子 </span></span><br><span class="line">            <span class="comment">// 811注：一个mtLocal用于一场比赛。对局结束后，mtLocal的种子会以base64编码写入牌谱</span></span><br><span class="line">    </span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"mt.seed=%s,%d"</span>,szSeedSeqName,nGame);</span><br><span class="line">            <span class="keyword">if</span> (<span class="number">1</span>) <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="keyword">sizeof</span>(seed)/<span class="keyword">sizeof</span>(*seed);++i) <span class="built_in">printf</span>(<span class="string">",%08X"</span>,seed[i]);</span><br><span class="line">    </span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"\r\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 811注：目前角田注释“ここまででmtRootは合計(MTRAND_N+4)tick”</span></span><br><span class="line">        <span class="comment">//（到此为止mtRoot合计(MTRAND_N+4)tick，也就是mtRoot生成了(MTRAND_N+4)个32bit的随机数）</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">/* ここで牌譜にszSeedSeqName,nGame,seedなどを出力 */</span></span><br><span class="line">        <span class="comment">// 在这里输出szSeedSeqName，nGame，种子 等等</span></span><br><span class="line">    </span><br><span class="line">        <span class="keyword">int</span> nKyoku=<span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">for</span>(;nKyoku&lt;<span class="number">10</span>;++nKyoku)&#123; <span class="comment">// 配牌が１０回行われた場合 （随便举了一个进行十次的牌局）</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            DWORD rnd[SHA512_DIGEST_SIZE/<span class="keyword">sizeof</span>(DWORD)*<span class="number">9</span>]; </span><br><span class="line">            <span class="comment">// 把输出流序列化为无符号4字节整数数组，该数组称为RND</span></span><br><span class="line">            <span class="comment">// rnd 数组，这个数组用于生成牌山。</span></span><br><span class="line">            <span class="comment">// SHA512_DIGEST_SIZE:512/8 , sizeof(DWORD):4 , 所以这个数组的长度是 512/8/4*9 </span></span><br><span class="line">            <span class="comment">// = 144 ，确保了136张麻将牌的顺序、两个色子都放得下。</span></span><br><span class="line">    </span><br><span class="line">            &#123;</span><br><span class="line">                DWORD src[<span class="keyword">sizeof</span>(rnd)/<span class="keyword">sizeof</span>(*rnd)*<span class="number">2</span>]; </span><br><span class="line">                <span class="comment">// src 数组，这个数组用于用于 SHA 512 散列算法。</span></span><br><span class="line">                <span class="comment">// src 数组的长度是 rnd 的两倍，288</span></span><br><span class="line">    </span><br><span class="line">                <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="keyword">sizeof</span>(src)/<span class="keyword">sizeof</span>(*src);++i) src[i] = mtLocal.genrand_int32();</span><br><span class="line">                <span class="comment">// 一共循环使用288次 mt199327ar 算法，不断生成随机数，写进二进制流 src 数组。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                <span class="comment">// 对SRC循环进行 SHA512 哈希。关于 SHA512 参考：https://baike.baidu.com/item/sha-512/3357968</span></span><br><span class="line">    </span><br><span class="line">                <span class="comment">/* 1024bit単位で512bitへhash*/</span>   </span><br><span class="line">                <span class="comment">// 以1024位散列为单位的512位 （811注：意思是以1024bit为单位，分别hash到512bit）</span></span><br><span class="line">    </span><br><span class="line">                <span class="comment">// 简单来说，src 数组是一个输入，经过 SHA512 哈希算法，会产生一个输出。</span></span><br><span class="line">                <span class="comment">// 哈希算法有两条特性：1. 输入稍微有变动输出就有极大变动。 2. 很难只通过输出来构造输入。</span></span><br><span class="line">                <span class="comment">// 哈希算法的特性让角田无法操控牌山。（811注：角田可以选择牌山，下文会详细讨论）</span></span><br><span class="line">    </span><br><span class="line">                <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="keyword">sizeof</span>(rnd)/SHA512_DIGEST_SIZE;++i)&#123; <span class="comment">// 循环次数是：144/（512/8）</span></span><br><span class="line">                    <span class="comment">// = 2.25 ，也就是分两次进行哈希，两次哈希分段使用完 src 的输入，</span></span><br><span class="line">                    <span class="comment">// 两次哈希的输出拼接成一个总的输出。</span></span><br><span class="line">                    <span class="comment">// 811注：这里网友畅畅搞错了，sizeof(rnd) = 144*4（单位：byte），</span></span><br><span class="line">                    <span class="comment">// 所以循环次数是(144*4)/(512/8)=9。也就是分九次进行哈希，</span></span><br><span class="line">                    <span class="comment">// 九次哈希分段使用完 src 的输入，九次哈希的输出拼接成一个总的输出。</span></span><br><span class="line">                    <span class="comment">// 2.25不是整数，显然是不对的</span></span><br><span class="line">                    SHA2::sha512_ctx ctx;</span><br><span class="line">                    SHA2::sha512_init(&amp;ctx);</span><br><span class="line">                    SHA2::sha512_update(&amp;ctx,(BYTE*)src+i*SHA512_DIGEST_SIZE*<span class="number">2</span>,SHA512_DIGEST_SIZE*<span class="number">2</span>); </span><br><span class="line">                    <span class="comment">// 一次输入 in = 1024 bit。 src 是长度为288的 DWORD 数组，总二进制长度为 1152，也就是分两次输入</span></span><br><span class="line">                    <span class="comment">// 811注：同上，总二进制长度为288*32bit=9216bit，也就是分9次输入</span></span><br><span class="line">                    SHA2::sha512_final (&amp;ctx,(BYTE*)rnd+i*SHA512_DIGEST_SIZE); </span><br><span class="line">                    <span class="comment">// 一次哈希输出 512 bit ，两次输出拼接成一个总输出。（811注：九次）</span></span><br><span class="line">                    <span class="comment">//输出是放在 rnd 数组里的。</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">    </span><br><span class="line">            <span class="comment">//最后一步：利用RND数组生成牌山,牌山为长度136的数组，基本思路是对RND数组的元素进行求余</span></span><br><span class="line">            BYTE yama[<span class="number">136</span>]; <span class="comment">// サンマは108  </span></span><br><span class="line">                            <span class="comment">// yama是牌山数组</span></span><br><span class="line">    </span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">136</span>;++i) yama[i]=i; <span class="comment">// 一开始牌山是做牌做好的，按顺序。</span></span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">136</span><span class="number">-1</span>;++i) swap(yama[i],yama[i + (rnd[i]%(<span class="number">136</span>-i))]);  </span><br><span class="line">            <span class="comment">// 然后根据刚才的 RND 数组（里面都是随机数）来 shuffle，也就是打乱牌山。（不断交换两张牌）</span></span><br><span class="line">    </span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"nGame=%d nKyoku=%d yama="</span>,nGame,nKyoku);</span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">136</span>;++i) <span class="built_in">printf</span>(<span class="string">"%s"</span>,haiDisp[yama[i]/<span class="number">4</span>]); <span class="comment">// 输出牌山</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"\r\n"</span>);</span><br><span class="line">    </span><br><span class="line">            <span class="keyword">int</span> dice0=rnd[<span class="number">135</span>]%<span class="number">6</span>;</span><br><span class="line">            <span class="keyword">int</span> dice1=rnd[<span class="number">136</span>]%<span class="number">6</span>; <span class="comment">// rnd 数组的135 136 用于投骰子</span></span><br><span class="line">            <span class="comment">// 811注：骰子的点数对牌山无影响，只影响显示效果。也就是说，天凤永远从数组的尾部开始摸牌，</span></span><br><span class="line">            <span class="comment">// 数组的头部永远是王牌，并非现实中的投骰子决定哪里开始摸牌</span></span><br><span class="line">    </span><br><span class="line">            <span class="comment">// rnd[137]～rnd[143]は未使用</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一局天凤麻将游戏中，生成牌山的要素：<br>1.<code>mtRoot</code>：是一个可能以系统时间、登录名等东西进行填充，用于随机数生成算法的种子。此外，mtRoot还用来决定东南西北的座位</p>
+<ul>
+<li>mtRoot 的具体生成方式角田并没有公开，如果公开了可能可以伪造种子来知晓牌山。</li>
+</ul>
+<p>2.<code>mtLocal</code>：用 mtRoot 生成的随机数，作为新的种子。（811注：mtRoot和mtLocal应该是随机数生成器的对象，而不是种子<br>3.<code>src</code> 数组，这个数组用于用于 SHA 512 散列算法。内容是以 mtLocal 做种子，288 次随机数算法取的一长串二进制流。<br>4.<code>rnd</code> 数组：长度为 144。会对 src 进行 SHA 512 散列算法，RND 是存放算法的结果的数组。之后要利用 RND 数组生成牌山。此外，每一局投的骰子也是 rnd 里面来的。</p>
+<ul>
+<li>rnd 数组的生成结果由于散列算法的性质，保证了公平性。</li>
+</ul>
+<p>5.<code>yama</code> 数组，长度 136 。就是牌山本体。思路很简单，一开始里面的数据初始化是 123456 这样的等差数列，然后对RND数组的元素进行求余后不断 swap 就可以打乱（shuffle）。<br>获取东一局的游戏牌山需要从第1步执行到第5步，第二局（无论是东一一本场还是东二）及之后只需要执行第 3 步到第 5 步。<br>虽然说第三步里面有随机要素，但其实四个人进到一桌坐下来，本质上这一局的牌山都已经安排好了。</p>
+</blockquote>
+<p>我再来总结一下流程：</p>
+<ul>
+<li>角田的服务器生成mtRoot的种子（不公开）；</li>
+<li>对一场比赛，用mtRoot生成(4+624)个32bit随机数，前四个用于确定座席，后624个作为mtLocal的种子；</li>
+<li>每一小局（每次配牌）：<ul>
+<li>用mtLocal生成288个32bit随机数，共9216bit；</li>
+<li>将9216bit以1024bit为单位用SHA-512 hash到4608bit = 144*32bit；</li>
+<li>将144个32bit整数用于洗牌和掷骰子；</li>
+</ul>
+</li>
+<li>比赛结束后，将mtLocal的种子写入牌谱。（在角田的代码中未体现）</li>
+</ul>
+<h2 id="玩家可以进行哪些检定，以及具体检定方法"><a href="#玩家可以进行哪些检定，以及具体检定方法" class="headerlink" title="玩家可以进行哪些检定，以及具体检定方法"></a>玩家可以进行哪些检定，以及具体检定方法</h2><ol>
+<li><p>天凤公开了从mtLocal的种子生成牌山的方法（代码），并在比赛结束后在牌谱中公开了mtLocal的种子，玩家可以从牌谱文件中找出这个种子，自己算出每一小局的牌山，与天凤牌谱显示的牌山核对；</p>
+</li>
+<li><p>天凤在对局前公开了席顺和mtLocal的种子的SHA-512 hash，玩家可以在对局结束后从牌谱文件里找出这个种子，和席顺一起自己hash一下，和天凤对局前公开的hash核对是否相同。</p>
+</li>
+</ol>
+<p>具体检定方法：</p>
+<ol>
+<li><p>牌山。<br>(a) 打一把真人对战，获取牌谱链接。牌谱链接形如“<a href="https://tenhou.net/0/?log=xxxxxxxxgm-xxxx-xxxx-xxxxxxxx&amp;tw=x" target="_blank" rel="noopener">https://tenhou.net/0/?log=xxxxxxxxgm-xxxx-xxxx-xxxxxxxx&amp;tw=x</a>”。把“log=”后的东西拼接到“<a href="https://tenhou.net/0/log/find.cgi?log=" target="_blank" rel="noopener">https://tenhou.net/0/log/find.cgi?log=</a>”后面，形成一个形如“<a href="https://tenhou.net/0/log/find.cgi?log=xxxxxxxxgm-xxxx-xxxx-xxxxxxxx&amp;tw=x" target="_blank" rel="noopener">https://tenhou.net/0/log/find.cgi?log=xxxxxxxxgm-xxxx-xxxx-xxxxxxxx&amp;tw=x</a>”的网址。在浏览器地址栏输入它，回车，可以下载到牌谱文件。（如果牌谱链接没有&amp;tw=x，在后面加上&amp;tw=0即可）<br>例：我们搞到了玩家“トトリ先生19歳”的一个牌谱链接<a href="http://tenhou.net/0/?log=2016100120gm-00a9-0000-fca091df" target="_blank" rel="noopener">http://tenhou.net/0/?log=2016100120gm-00a9-0000-fca091df</a>。我们在浏览器地址栏输入<a href="https://tenhou.net/0/log/find.cgi?log=2016100120gm-00a9-0000-fca091df&amp;tw=0" target="_blank" rel="noopener">https://tenhou.net/0/log/find.cgi?log=2016100120gm-00a9-0000-fca091df&amp;tw=0</a>，即可下载牌谱文件。<br>(b) 这个牌谱文件是gzip格式的。先解压，然后用文本编辑器打开，可以看到seed=”mt19937ar-sha512-n288-base64,一大堆东西”。把那一大堆东西复制出来，进行base64解码，即可得到mtLocal的种子。（注：从某些途径获取的牌谱是plaintext而不是gz）<br>例：将刚刚下载的牌谱解压并使用某文本编辑器打开</p>
+<img src="/2021/01/01/天凤牌山生成算法及其验证/sc1.png">
+<p>我们要的“一大堆东西”找到了。把它base64解码。以Python为例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">seed_str = <span class="string">'Ov9f...Hcjm'</span></span><br><span class="line">seed_bytes = base64.b64decode(seed_str)</span><br></pre></td></tr></table></figure>
+<p>(c) 解码之后我们得到了一个2496Byte的byte object。将它分割成624个无符号4Byte整数。在类型转换到整数时，我们必须注意endianness。角田的服务器是little endian的，所以我们也要按照little endian来转换成整数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(seed_bytes) // <span class="number">4</span>):</span><br><span class="line">    result.append(int.from_bytes(seed_bytes[i*<span class="number">4</span>:i*<span class="number">4</span>+<span class="number">4</span>], byteorder=<span class="string">'little'</span>))</span><br></pre></td></tr></table></figure>
+<p>(d) 然后我们用这个int array初始化mtRand。如果想使用C语言，可以直接调用init_by_array函数。如果想使用Python，虽然Python的random的实现刚好是MT算法，但是似乎没有提供init_by_array方法。可能需要自己实现init_by_array。C语言代码略。Python代码请看最后附录。<br>(e) 初始化mtRand后，我们就可以按照角田的代码，<strong>对每一小局</strong>，生成288个32bit随机数，共9216bit，再将9216bit以1024bit为单位分9次用SHA-512 hash到512bit*9 = 4608bit = 144*32bit。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> nKyoku <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    rnd = [<span class="number">0</span>] * <span class="number">144</span> <span class="comment"># rnd将被用于洗牌和投骰子</span></span><br><span class="line">    rnd_bytes = <span class="string">b''</span></span><br><span class="line">    src = [random.getrandbits(<span class="number">32</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">288</span>)] <span class="comment"># 生成288个32bit随机数，赋值给src</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">9</span>): <span class="comment"># 分9次hash</span></span><br><span class="line">        hash_source = <span class="string">b''</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">32</span>): <span class="comment"># 每次hash的source的大小为32*4Byte*8bit/Byte = 1024bit</span></span><br><span class="line">            hash_source += src[i*<span class="number">32</span>+j].to_bytes(<span class="number">4</span>, byteorder=<span class="string">'little'</span>)</span><br><span class="line">        rnd_bytes += hashlib.sha512(hash_source).digest()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">144</span>):</span><br><span class="line">        rnd[i] = int.from_bytes(rnd_bytes[i*<span class="number">4</span>:i*<span class="number">4</span>+<span class="number">4</span>], byteorder=<span class="string">'little'</span>) <span class="comment"># 把hash结果转换成int类型</span></span><br></pre></td></tr></table></figure>
+<p>(f) 使用rnd数组洗牌，并输出牌山，和官方牌谱阅读器显示的牌山对比是否一致。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以四麻为例。三麻把所有136替换为108</span></span><br><span class="line">yama = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">136</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">136</span> - <span class="number">1</span>):</span><br><span class="line">    temp = yama[i]</span><br><span class="line">    yama[i] = yama[i + (rnd[i]%(<span class="number">136</span>-i))]</span><br><span class="line">    yama[i + (rnd[i]%(<span class="number">136</span>-i))] = temp</span><br></pre></td></tr></table></figure>
+<p>四麻：yama数组的元素的范围是[0,136)。除以4向下取整，0-8为1-9万，9-17为1-9筒，18-26为1-9索，27-34为东南西北白发中。如果一张5m5p5s除以4的余数为0，且规则有赤，则为赤牌。<br>三麻：yama数组的元素的范围是[0,108)。除以4向下取整，0为1万，1为9万，2-10为1-9筒，11-19为1-9索，20-26为东南西北白发中。如果一张5p5s除以4的余数为0，且规则有赤，则为赤牌。<br>骰子对牌山没有影响，不投也无所谓</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打印牌山。依旧以四麻为例</span></span><br><span class="line">print(<span class="string">'nKyoku='</span> + str(nKyoku) + <span class="string">' yama='</span>)</span><br><span class="line">haiDisp = [<span class="string">"1m"</span>, <span class="string">"2m"</span>, <span class="string">"3m"</span>, <span class="string">"4m"</span>, <span class="string">"5m"</span>, <span class="string">"6m"</span>, <span class="string">"7m"</span>, <span class="string">"8m"</span>, <span class="string">"9m"</span>, <span class="string">"1p"</span>, <span class="string">"2p"</span>, <span class="string">"3p"</span>, <span class="string">"4p"</span>, <span class="string">"5p"</span>, <span class="string">"6p"</span>, <span class="string">"7p"</span>, <span class="string">"8p"</span>, <span class="string">"9p"</span>, <span class="string">"1s"</span>, <span class="string">"2s"</span>, <span class="string">"3s"</span>, <span class="string">"4s"</span>, <span class="string">"5s"</span>, <span class="string">"6s"</span>, <span class="string">"7s"</span>, <span class="string">"8s"</span>, <span class="string">"9s"</span>, <span class="string">"东"</span>, <span class="string">"南"</span>, <span class="string">"西"</span>, <span class="string">"北"</span>, <span class="string">"白"</span>, <span class="string">"发"</span>, <span class="string">"中"</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">136</span>):</span><br><span class="line">    print(haiDisp[yama[i] // <span class="number">4</span>], end=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<p>例：刚刚下载的“トトリ先生19歳”的牌谱运行结果为</p>
+<img src="/2021/01/01/天凤牌山生成算法及其验证/sc2.png">
+<p>用天凤官方web版牌谱阅读器打开牌谱(<a href="https://tenhou.net/3/?log=2016100120gm-00a9-0000-fca091df" target="_blank" rel="noopener">https://tenhou.net/3/?log=2016100120gm-00a9-0000-fca091df</a>)，东一局牌山为</p>
+<img src="/2021/01/01/天凤牌山生成算法及其验证/sc3.png">
+<p>经对比，牌山一致。</p>
+</li>
+<li><p>席顺和mtLocal的种子。<br>(a) 打一把段位。在预约之前，打开<a href="https://tenhou.net/stat/rand/" target="_blank" rel="noopener">https://tenhou.net/stat/rand/</a>，根据我们要打的规则来点击对应的“表示”。如果我们打算打“三般东喰赤”，就点击红圈圈出来的“表示”。</p>
+<img src="/2021/01/01/天凤牌山生成算法及其验证/sc4.png">
+<p>会弹出一个新标签页</p>
+<img src="/2021/01/01/天凤牌山生成算法及其验证/sc7.png">
+<p>可以看到一堆字符。别关掉它。现在可以打一把段位了。<br>(b1) 打完后，复制牌谱链接，回到<a href="https://tenhou.net/stat/rand/" target="_blank" rel="noopener">https://tenhou.net/stat/rand/</a>，把牌谱链接粘贴到下图的框里，点击OK按钮</p>
+<img src="/2021/01/01/天凤牌山生成算法及其验证/sc5.png">
+<p>然后我们可以得到一串字符</p>
+<img src="/2021/01/01/天凤牌山生成算法及其验证/sc6.png">
+<p>回到打段位前“别关掉它”的标签页，发现9d26那一行字符的确存在。这说明在对局前，本场对局的种子及席顺已经确定。</p>
+<img src="/2021/01/01/天凤牌山生成算法及其验证/sc8.png">
+<p>检定完成。<br>等等，用角田的工具来计算hash，不就是让角田自己给自己当裁判了？角田自己也说：</p>
+<blockquote>
+<p>※天鳳が提供しているCGI版の検証ツールを使用することは、厳密な検証にはなりません。</p>
+</blockquote>
+<p>我们可以不用角田的工具，自己来计算。在<a href="https://tenhou.net/stat/rand/" target="_blank" rel="noopener">https://tenhou.net/stat/rand/</a>中角田写道</p>
+<blockquote>
+<ul>
+<li>SHA512のソースは4(座席並べ替え情報) + 624*8(乱数種) = 4996bytes</li>
+</ul>
+</blockquote>
+<p>但角田并没有说明“座席並べ替え情報”和“乱数種”是如何编码的，这导致了玩家无法自己计算hash。经与角田本人邮件沟通以及自己尝试，我知道了它们的编码方式。我会在接下来的步骤中说明。<br>(b2) 打完后，下载牌谱（参考1.(a)(b)），获取种子，base64解码，<strong>然后表示成16进制，不含0x，其中abcdef小写</strong>。再encode成bytes类型。至此，“乱数種”已经编码完成了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seed = bytes(hex(int.from_bytes(base64.b64decode(seed_text), byteorder=<span class="string">'big'</span>))[<span class="number">2</span>:], encoding=<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+<p>接下来我们获取“座席並べ替え情報”。要想获取这个情报，我们必须先知道角田是如何安排座位的。<br>角田分配座位的方法：根据四个玩家的名字的<strong>字典序升序</strong>，将玩家分别编号为0、1、2、3。角田事先确定这场比赛的座位安排为“xyzw”，其中x、y、z、w均为0到3的整数且不重复。意思是：玩家x东起，玩家y南起，玩家z西起，玩家w北起。<br>在打完段位后，我们可以从四个玩家的名字和他们实际的东南西北起，来逆推出这个“xyzw”。接下来我们来说明如何逆推出“xyzw”的值。<br>在牌谱中获取三个玩家的名字（四麻为四个玩家）。玩家名字在牌谱文件的UN tag里。<code>n0</code>是东起玩家名，<code>n1</code>是南起玩家名，以此类推。例如我刚打的三般东喰赤的牌谱：<br><code>&lt;UN n0=&quot;%E3%81%A1%E3%82%83%E3%81%84%E3%81%BE%E3%81%99%E3%82%93%E3%81%93&quot; n1=&quot;%E3%82%A2%E3%82%B0%E3%83%A2%E3%83%B3&quot; n2=&quot;%4E%6F%4E%61%6D%65&quot; n3=&quot;&quot; dan=&quot;7,2,0,0&quot; rate=&quot;1401.66,1569.12,1500.00,1500.00&quot; sx=&quot;M,M,M,C&quot;/&gt;</code><br>对玩家名进行url unquote，我们得到真正的名字：<br><code>n0=&#39;ちゃいますんこ&#39;, n1=&#39;アグモン&#39;, n2=&#39;NoName&#39;</code><br>将名字进行字典序升序排序，得到<br><code>[&#39;NoName&#39;, &#39;ちゃいますんこ&#39;, &#39;アグモン&#39;]</code><br>根据角田分配座位的方法，NoName为玩家0，ちゃいますんこ为玩家1，アグモン为玩家2，三麻没有玩家3。这场比赛实际上玩家1东起，玩家2南起，玩家0西起，一个不存在的玩家3北起。于是我们可以推出“xyzw”=“1203”。我们想要知道的“座席並べ替え情報”就等于<code>b&#39;1203&#39;</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seats = <span class="string">b'1203'</span></span><br></pre></td></tr></table></figure>
+<p>知道了“座席並べ替え情報”和“乱数種”，我们就可以计算hash了。直接把它们拼接起来再hash即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source = seat + seed</span><br><span class="line">print(hashlib.sha512(source).hexdigest())</span><br></pre></td></tr></table></figure>
+<p>运行结果为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9d268e0153446c7c238e12a110563b8decb95695d0dfe60dd3110e2323f9ce3ef5cf22cd1390564dbb7301572d554525fa772a2ca45f56e7167cb4c2d0139a00</span><br></pre></td></tr></table></figure>
+<p>与角田的工具的运行结果相同。</p>
+</li>
+</ol>
+<p>因此天凤做到了：</p>
+<ol>
+<li>一旦mtLocal的种子定下来，整场比赛每一小局的牌山都定下来了。而mtLocal的种子（的hash）在对局前就已经公开。也就是说，<strong>在比赛前，每一局的牌山早已确定</strong>，天凤的牌山不是“量子牌山”，角田无法在对局中篡改牌山。</li>
+<li>在一桌四个人（三麻是三个人）匹配完成之后，角田无法随意将他们安排座位（谁东起谁南起），而是<strong>只能按照事先确定的席顺来安排座位</strong>。</li>
+</ol>
+<p>也有以下不足之处：</p>
+<ol>
+<li><p>玩家无法检验角田有没有故意选择牌山。虽然由于牌山生成算法是固定的且中间有hash步骤，角田不能为所欲为地生成奇葩牌山，但是角田可以在比赛前对mtLocal的种子进行选择。一个mtLocal的种子对应了一场比赛的所有小局的牌山，角田可以先看看这个种子生成的牌山是啥样的，然后决定用不用这个种子。席顺也是。</p>
+<blockquote>
+<p>牌山の生成方法を完全公開にする予定です。</p>
+<p>公開する情報は「配山の生成手法」と「乱数シード」になります。</p>
+<p>これによって<br>１．作為的に配牌を選択していない<br>２．特定の局面で山を操作していない<br>ことが牌譜と対戦ログから検証可能になります。<br>※現状でも２．は検証可能です。</p>
+</blockquote>
+<p>角田的博客中提到了“※現状でも２．は検証可能です”，也就是说“１．没有故意选择配牌”这点玩家无法验证。但是，即使角田故意选择了牌山，也很难给某个特定的玩家（比如氪金玩家）好牌、某个特定的玩家烂牌，因为mtLocal的种子、席顺是在对局前，甚至可能在玩家预约前、登录前就确定的。</p>
+</li>
+</ol>
+<h2 id="和雀魂的对比"><a href="#和雀魂的对比" class="headerlink" title="和雀魂的对比"></a>和雀魂的对比</h2><p>雀魂只在每一小局开始时公开了该小局的牌山（不含四家起手的配牌）的MD5，其他均未公开。因此只能确定雀魂不会在对局中改变当前小局的牌山，其他均无法确定。下表是“以最坏的恶意来揣测”天凤与雀魂，即对于玩家无法验证的事情均认为可以做。<br><!--|                                | 天凤                         | 雀魂             |
+| ------------------------------ | ---------------------------- | ---------------- |
+| 牌山生成算法                   | 公开                         | 未公开           |
+| 牌山的“随机性”                 | 只能对随机生成的牌山进行选择 | 可以生成任意牌山 |
+| 对局中不会改变当前小局的牌山   | 是                           | 是               |
+| 对局中不会改变接下来小局的牌山 | 是                           | 否               |
+| 玩家匹配算法                   | 未公开                       | 未公开           |
+| 玩家座席分配算法               | 未完全公开                   | 未公开           |
+| 玩家座席是事先确定的           | 是                           | 否               |
+| 可以给特定人特定的牌           | 是，但很难，约等于不能       | 是               |
+--></p>
+<img src="/2021/01/01/天凤牌山生成算法及其验证/sc9.png">
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/19/好久没更新/" rel="next" title="好久没更新">
+                <i class="fa fa-chevron-left"></i> 好久没更新
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#天凤牌山生成算法讲解"><span class="nav-number">1.</span> <span class="nav-text">天凤牌山生成算法讲解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#玩家可以进行哪些检定，以及具体检定方法"><span class="nav-number">2.</span> <span class="nav-text">玩家可以进行哪些检定，以及具体检定方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#和雀魂的对比"><span class="nav-number">3.</span> <span class="nav-text">和雀魂的对比</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
