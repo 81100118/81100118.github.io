@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"81100118.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDR reconstruction 有关论文阅读">
+<meta property="og:url" content="https://81100118.github.io/2018/10/28/HDR-reconstruction-%E6%9C%89%E5%85%B3%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/index.html">
+<meta property="og:site_name" content="81100118的博客">
+<meta property="og:description" content="HDR image reconstruction from a single exposure using deep CNNs这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;(7)。实际代码中用的是第二种。  第一种第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-10-28T05:20:42.000Z">
+<meta property="article:modified_time" content="2022-07-18T11:45:18.878Z">
+<meta property="article:author" content="81100118">
+<meta property="article:tag" content="450">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://81100118.github.io/2018/10/28/HDR-reconstruction-%E6%9C%89%E5%85%B3%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://81100118.github.io/2018/10/28/HDR-reconstruction-%E6%9C%89%E5%85%B3%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/","path":"2018/10/28/HDR-reconstruction-有关论文阅读/","title":"HDR reconstruction 有关论文阅读"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HDR reconstruction 有关论文阅读 | 81100118的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">81100118的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs"><span class="nav-number">1.</span> <span class="nav-text">HDR image reconstruction from a single exposure using deep CNNs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image"><span class="nav-number">2.</span> <span class="nav-text">Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content"><span class="nav-number">3.</span> <span class="nav-text">ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">81100118</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2018/10/28/HDR-reconstruction-%E6%9C%89%E5%85%B3%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="81100118">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HDR reconstruction 有关论文阅读 | 81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HDR reconstruction 有关论文阅读
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-10-28 13:20:42" itemprop="dateCreated datePublished" datetime="2018-10-28T13:20:42+08:00">2018-10-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-18 19:45:18" itemprop="dateModified" datetime="2022-07-18T19:45:18+08:00">2022-07-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BE%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">课程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs"><a href="#HDR-image-reconstruction-from-a-single-exposure-using-deep-CNNs" class="headerlink" title="HDR image reconstruction from a single exposure using deep CNNs"></a>HDR image reconstruction from a single exposure using deep CNNs</h2><p>这篇文章有两种loss function，一种是eq.(5)，另一种是eqs.(6)&amp;(7)。实际代码中用的是第二种。</p>
+<ol>
+<li>第一种<br>第一种简单来说就是把每个像素的每个通道的值的对数和predicted的值的差的平方。但是平方里面有个系数$\alpha_i$， 它的定义是eq.(2)：根据rgb通道的最大值，从[0.95,1]线性映射到[0,1]。因此如果rgb通道全小于0.95，loss就会被计为0。</li>
+</ol>
+<span id="more"></span>
+<ol>
+<li>第二种<br>第二种比较复杂，定义了illuminance 和 reflectance分量：<br>“The illumination component $I$ describes the <strong>global variations</strong>, and is responsible for the high<br>dynamic range. The reflectance $R$ stores information about <strong>details</strong><br>and colors.”<br>Def log illuminance: rgb通道的linear domain的值的线性组合(与{0.213, 0.715, 0.072}点乘)的对数。（原文公式(6) (7)之间）<br>Def $\log I<em>i$: 将图片log illuminance矩阵卷积高斯低通filter后，元素i的（对数域的）值<br>Def $\log R</em>{i,c}$：像素i的c通道的对数域的值减去log illuminance<br><strong>Loss func</strong>: Eq. (7). 简单来说就是 预测出的$\log I$值误差的平方 和$\log R$值误差的平方 的线性组合（线性组合系数为$\lambda$ 和$1-\lambda$），图5展示了不同$\lambda$的效果</li>
+</ol>
+<h2 id="Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image"><a href="#Deep-Chain-HDRI-Reconstructing-a-High-Dynamic-Range-Image-from-a-Single-Low-Dynamic-Range-Image" class="headerlink" title="Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image"></a>Deep Chain HDRI Reconstructing a High Dynamic Range Image from a Single Low Dynamic Range Image</h2><p>这篇文章是通过神经网络从一张LDR生成7种不同曝光度的LDR然后用传统方法合成1张HDR。</p>
+<p>Loss function (Eq. (3)) 是L1norm（误差的绝对值）加上$\hat{y_i}$的“全变差正则化项”(total variation<br>regularization)防止过拟合。这个TV regularization有点神秘，论文里没找到具体公式，扫了一眼TV相关论文，好像这只是一个类型，有各种不同的具体公式，wikipedia说1992年一篇论文提出的公式是这样</p>
+<p>$V(y)=\sum <em>{i,j}{\sqrt {\left|y</em>{i+1,j}-y<em>{i,j}\right|^{2}+\left|y</em>{i,j+1}-y_{i,j}\right|^{2}}}$</p>
+<p>大概可以理解成导数的和</p>
+<p>这个loss没啥特别的。关键是这个网络不是用来生成HDR的，所以好像和我们没啥关系</p>
+<p>问题：$y_i$具体指什么？论文里好像没说</p>
+<h2 id="ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content"><a href="#ExpandNet-A-Deep-Convolutional-Neural-Network-for-High-Dynamic-Range-Expansion-from-Low-Dynamic-Range-Content" class="headerlink" title="ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content"></a>ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content</h2><p>Loss function: L1 Norm, （这篇文章说频繁使用L2容易导致图片模糊），加上{1 - 预测(R, G, B)向量与实际(R, G, B)向量的夹角的余弦}。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/450/" rel="tag"># 450</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/26/%E7%9C%9F%E6%AD%A3%E7%9A%84hello-world/" rel="prev" title="真正的hello world!">
+                  <i class="fa fa-chevron-left"></i> 真正的hello world!
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/28/2018%E4%B8%8A%E6%B5%B7%E9%AB%98%E6%A0%A1%E6%97%A5%E9%BA%BB%E8%81%94%E8%B5%9B%E4%B8%AA%E4%BA%BA%E8%B5%9B/" rel="next" title="2018上海高校日麻联赛个人赛">
+                  2018上海高校日麻联赛个人赛 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">81100118</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"81100118.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="「統計学」のマージャン戦術 读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计学的麻将战术 主题0：根据局收支的大小来做决定是基础">
+<meta property="og:url" content="https://81100118.github.io/2019/02/23/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E7%9A%84%E9%BA%BB%E5%B0%86%E6%88%98%E6%9C%AF-%E4%B8%BB%E9%A2%980%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%98%AF%E6%A0%B9%E6%8D%AE%E5%B1%80%E6%94%B6%E6%94%AF%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%81%9A%E5%86%B3%E5%AE%9A/index.html">
+<meta property="og:site_name" content="81100118的博客">
+<meta property="og:description" content="「統計学」のマージャン戦術 读书笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-02-23T07:53:30.000Z">
+<meta property="article:modified_time" content="2022-07-22T18:06:05.253Z">
+<meta property="article:author" content="81100118">
+<meta property="article:tag" content="日麻笔记 统计学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://81100118.github.io/2019/02/23/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E7%9A%84%E9%BA%BB%E5%B0%86%E6%88%98%E6%9C%AF-%E4%B8%BB%E9%A2%980%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%98%AF%E6%A0%B9%E6%8D%AE%E5%B1%80%E6%94%B6%E6%94%AF%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%81%9A%E5%86%B3%E5%AE%9A/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://81100118.github.io/2019/02/23/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E7%9A%84%E9%BA%BB%E5%B0%86%E6%88%98%E6%9C%AF-%E4%B8%BB%E9%A2%980%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%98%AF%E6%A0%B9%E6%8D%AE%E5%B1%80%E6%94%B6%E6%94%AF%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%81%9A%E5%86%B3%E5%AE%9A/","path":"2019/02/23/统计学的麻将战术-主题0：基本是根据局收支的大小做决定/","title":"统计学的麻将战术 主题0：根据局收支的大小来做决定是基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>统计学的麻将战术 主题0：根据局收支的大小来做决定是基础 | 81100118的博客</title><meta name="robots" content="noindex">
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">81100118的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%85%88%E5%88%B6%E7%AB%8B%E7%9B%B4"><span class="nav-number">1.</span> <span class="nav-text">第一章 先制立直</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A2%980-%E6%A0%B9%E6%8D%AE%E5%B1%80%E6%94%B6%E6%94%AF%E7%9A%84%E5%A4%A7%E5%B0%8F%E6%9D%A5%E5%81%9A%E5%86%B3%E5%AE%9A%E6%98%AF%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.</span> <span class="nav-text">主题0 根据局收支的大小来做决定是基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%B1%80%E6%94%B6%E6%94%AF%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.1.1.</span> <span class="nav-text">使用局收支时的注意事项</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">81100118</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2019/02/23/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E7%9A%84%E9%BA%BB%E5%B0%86%E6%88%98%E6%9C%AF-%E4%B8%BB%E9%A2%980%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%98%AF%E6%A0%B9%E6%8D%AE%E5%B1%80%E6%94%B6%E6%94%AF%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%81%9A%E5%86%B3%E5%AE%9A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="81100118">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="统计学的麻将战术 主题0：根据局收支的大小来做决定是基础 | 81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          统计学的麻将战术 主题0：根据局收支的大小来做决定是基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-02-23 15:53:30" itemprop="dateCreated datePublished" datetime="2019-02-23T15:53:30+08:00">2019-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-23 02:06:05" itemprop="dateModified" datetime="2022-07-23T02:06:05+08:00">2022-07-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%97%A5%E9%BA%BB/" itemprop="url" rel="index"><span itemprop="name">日麻</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>「統計学」のマージャン戦術 读书笔记</p>
+<span id="more"></span>
+<p>仅供学习交流，对原版书感兴趣的读者请去日亚购买</p>
+<h1 id="第一章-先制立直"><a href="#第一章-先制立直" class="headerlink" title="第一章 先制立直"></a>第一章 先制立直</h1><h2 id="主题0-根据局收支的大小来做决定是基础"><a href="#主题0-根据局收支的大小来做决定是基础" class="headerlink" title="主题0 根据局收支的大小来做决定是基础"></a>主题0 根据局收支的大小来做决定是基础</h2><p>“局收支”就是本局自家点数变动的期望值。实际上应该根据这场比赛的pt期望来打牌，平场时局收支和pt期望的相关度很高，所以可以简化成根据局收支打牌。</p>
+<p><strong>例</strong> 东1局，自己是南家。第5巡时他家没有立直也没有副露，自己12399m345s23467p平和nomi听牌。立直还是默听？</p>
+<ul>
+<li>选择立直的场合<ul>
+<li>和了率为68%，和了时平均获得3700点（以下省略平均）</li>
+<li>放铳率为4%，放铳时失点6600</li>
+<li>被自摸率（他家自摸的概率）为8%，被自摸时失点2900</li>
+<li>横移动率（其他家互相点炮的概率）为4%，横移动时失点1000（自己的立直棒被没收）</li>
+<li>流局率为13%，流局时得点约1000</li>
+</ul>
+</li>
+<li>选择默听的场合<ul>
+<li>和了率为85%，和了时获得1100点</li>
+<li>放铳率为4%，放铳时失点5600</li>
+<li>被自摸率（他家自摸的概率）为5%，被自摸时失点1900</li>
+<li>横移动率（其他家互相点炮的概率）为6%，横移动时失点0</li>
+<li>流局率为13%，流局时得点约2000<br>根据以上数据计算可得立直的期望为+1900点，默听的期望为+600点，因此选择立直。</li>
+</ul>
+</li>
+</ul>
+<p>本书统计了天凤凤凰桌东南战的牌谱数据来作为期望值。</p>
+<p>直接计算局收支比较麻烦，本书给出了简易版的局收支求法：</p>
+<script type="math/tex; mode=display">局收支=和了率 \times (和了时取得点 + 1500) - 1500</script><h3 id="使用局收支时的注意事项"><a href="#使用局收支时的注意事项" class="headerlink" title="使用局收支时的注意事项"></a>使用局收支时的注意事项</h3><p>牌谱统计的是一整类的样本，没考虑具体场面，所以牌谱统计的局收支和某一个具体场面的局收支之间会有误差。本书的和了率之类的误差约5%，局收支的误差约400点（<script type="math/tex">5\%\times约8000点</script>）。因此局收支差400点以内的话，统计上局收支较低的选择在某具体场况可能反而比统计上局收支较高的选择实际上局收支更高。因此在统计上局收支相近的时候要看场况具体分析。</p>
+<!-- flag of hidden posts -->
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%97%A5%E9%BA%BB%E7%AC%94%E8%AE%B0-%E7%BB%9F%E8%AE%A1%E5%AD%A6/" rel="tag"># 日麻笔记 统计学</a>
+          </div>
+
+        
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">81100118</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
