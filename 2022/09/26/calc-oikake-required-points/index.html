@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"81100118.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="当自己门前听牌但有对手先制立直时，可以选择“追立”、“默听”、“兜牌”和“全弃”。选择默听的情况较少，兜牌也比较复杂。书中只考虑追立与全弃，进而计算追立的要求打点。 计算追立的要求打点 令追立的局收支与全弃的局收支相等，则追立的打点为要求打点。 计算追立局收支的方法 下面解释书中计算追立局收支的方法。 追立有以下可能结果：和牌、放铳、被自摸、横移动、流局。 \[追立局收支&#x3D;\sum 获得某结果的概">
+<meta property="og:type" content="article">
+<meta property="og:title" content="根据《数据制胜：三人麻将》书中数据计算追立要求打点，书上疑有矛盾">
+<meta property="og:url" content="https://81100118.github.io/2022/09/26/calc-oikake-required-points/index.html">
+<meta property="og:site_name" content="81100118的博客">
+<meta property="og:description" content="当自己门前听牌但有对手先制立直时，可以选择“追立”、“默听”、“兜牌”和“全弃”。选择默听的情况较少，兜牌也比较复杂。书中只考虑追立与全弃，进而计算追立的要求打点。 计算追立的要求打点 令追立的局收支与全弃的局收支相等，则追立的打点为要求打点。 计算追立局收支的方法 下面解释书中计算追立局收支的方法。 追立有以下可能结果：和牌、放铳、被自摸、横移动、流局。 \[追立局收支&#x3D;\sum 获得某结果的概">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-26T06:41:11.000Z">
+<meta property="article:modified_time" content="2022-09-26T14:18:47.736Z">
+<meta property="article:author" content="81100118">
+<meta property="article:tag" content="日麻">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://81100118.github.io/2022/09/26/calc-oikake-required-points/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://81100118.github.io/2022/09/26/calc-oikake-required-points/","path":"2022/09/26/calc-oikake-required-points/","title":"根据《数据制胜：三人麻将》书中数据计算追立要求打点，书上疑有矛盾"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>根据《数据制胜：三人麻将》书中数据计算追立要求打点，书上疑有矛盾 | 81100118的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">81100118的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E8%BF%BD%E7%AB%8B%E7%9A%84%E8%A6%81%E6%B1%82%E6%89%93%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">计算追立的要求打点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E8%BF%BD%E7%AB%8B%E5%B1%80%E6%94%B6%E6%94%AF%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">计算追立局收支的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%BC%83%E7%9A%84%E5%B1%80%E6%94%B6%E6%94%AF"><span class="nav-number">1.2.</span> <span class="nav-text">全弃的局收支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E5%85%A5%E5%85%B7%E4%BD%93%E6%95%B0%E5%80%BC"><span class="nav-number">1.3.</span> <span class="nav-text">代入具体数值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%A4%E9%9D%A2%E4%BA%B2%E5%AF%B9%E5%AD%90%E5%8C%97114%E5%B7%A1%E5%AE%A3%E8%A8%80%E7%89%8C%E9%93%B3%E7%8E%8710%E4%B8%BA%E4%BE%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">以两面、亲对子北1、14巡、宣言牌铳率10%为例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E6%84%9A%E5%BD%A2%E5%AD%90%E5%AF%B9%E5%AD%90%E5%8C%97114%E5%B7%A1%E5%AE%A3%E8%A8%80%E7%89%8C%E9%93%B3%E7%8E%8710%E4%B8%BA%E4%BE%8B"><span class="nav-number">1.3.2.</span> <span class="nav-text">以愚形、子对子北1、14巡、宣言牌铳率10%为例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%87%BA%E7%9A%84%E8%A6%81%E6%B1%82%E6%89%93%E7%82%B9%E5%92%8C%E7%9B%B4%E6%8E%A5%E6%9F%A5%E5%BE%97%E7%9A%84%E8%A6%81%E6%B1%82%E6%89%93%E7%82%B9%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">2.</span> <span class="nav-text">计算出的要求打点和直接查得的要求打点的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E9%9D%A2"><span class="nav-number">2.1.</span> <span class="nav-text">两面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%AF%B9%E5%AD%90"><span class="nav-number">2.1.1.</span> <span class="nav-text">子对子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%AF%B9%E4%BA%B2"><span class="nav-number">2.1.2.</span> <span class="nav-text">子对亲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%B2%E5%AF%B9%E5%AD%90"><span class="nav-number">2.1.3.</span> <span class="nav-text">亲对子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9A%E5%BD%A2"><span class="nav-number">2.2.</span> <span class="nav-text">愚形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%AF%B9%E5%AD%90-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">子对子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%AF%B9%E4%BA%B2-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">子对亲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%B2%E5%AF%B9%E5%AD%90-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">亲对子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">81100118</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2022/09/26/calc-oikake-required-points/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="81100118">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="根据《数据制胜：三人麻将》书中数据计算追立要求打点，书上疑有矛盾 | 81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          根据《数据制胜：三人麻将》书中数据计算追立要求打点，书上疑有矛盾
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-26 14:41:11 / 修改时间：22:18:47" itemprop="dateCreated datePublished" datetime="2022-09-26T14:41:11+08:00">2022-09-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>当自己门前听牌但有对手先制立直时，可以选择“追立”、“默听”、“兜牌”和“全弃”。选择默听的情况较少，兜牌也比较复杂。书中只考虑追立与全弃，进而计算追立的要求打点。</p>
+<h1 id="计算追立的要求打点">计算追立的要求打点</h1>
+<p>令<strong>追立的局收支</strong>与<strong>全弃的局收支</strong>相等，则追立的打点为要求打点。</p>
+<h2 id="计算追立局收支的方法">计算追立局收支的方法</h2>
+<p>下面解释书中计算追立局收支的方法。</p>
+<p>追立有以下可能结果：和牌、放铳、被自摸、横移动、流局。</p>
+<p><span class="math display">\[追立局收支=\sum 获得某结果的概率 \times
+获得该结果时的得分期望\]</span></p>
+<span id="more"></span>
+<p>和了率、放铳率、被自摸率、横移动率、流局率可从书中表16-8（两面追立）、表18-5（愚形追立）查得。</p>
+<ul>
+<li><p>和牌时的得分期望 就是我们需要计算的“要求打点”。</p></li>
+<li><p>放铳时的得分期望
+只考虑放铳给先制立直者。无一发。平均铳点可从表14-1查得（立直非一发 ·
+0枚、1枚、2枚
+这三行）。若立直宣言成功之后放铳，还需额外支出立直棒1000点。</p></li>
+<li><p>被自摸时的得分期望
+只考虑被先制立直者自摸。无一发。对手平均打点可从表14-1查得（立直非一发 ·
+0枚、1枚、2枚
+这三行）。自己被自摸损失的点数，为“对手平均打点”乘以“庄闲关系的系数”。自己是庄家，被闲家自摸（亲对子），则系数为2/3。子对子的系数为1/3。子对亲的系数为1/2。另外，还需支出立直棒1000点。</p></li>
+<li><p>横移动时的得分期望 支出立直棒1000点。</p></li>
+<li><p>流局时的得分期望 根据牌谱解析结果，为-200点。</p></li>
+</ul>
+<h2 id="全弃的局收支">全弃的局收支</h2>
+<p>全弃的局收支可从表15-2查得。</p>
+<h2 id="代入具体数值">代入具体数值</h2>
+<h3
+id="以两面亲对子北114巡宣言牌铳率10为例">以两面、亲对子北1、14巡、宣言牌铳率10%为例</h3>
+<p>从表16-8查得和了率为34.5%，放铳率为21.1%，被自摸率为16.8%，横移动率为1.4%，流局率为26.2%。</p>
+<p>从表14-1查得平均铳点为7995。</p>
+<p>从表14-1查得对手平均自摸打点为7531，乘以2/3即为自己被自摸损失点数。</p>
+<p>以一张表格来总结：</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>概率</th>
+<th>期望</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>和牌</td>
+<td>34.5%</td>
+<td>x</td>
+<td>令要求打点为x</td>
+</tr>
+<tr class="even">
+<td>宣言牌放铳</td>
+<td>10.0%</td>
+<td>-7995</td>
+<td>将放铳分为两类，若宣言牌放铳则无需支出立直棒</td>
+</tr>
+<tr class="odd">
+<td>宣言成功后放铳</td>
+<td>11.1%</td>
+<td>-8995</td>
+<td>宣言成功后放铳需额外支出立直棒</td>
+</tr>
+<tr class="even">
+<td>被自摸</td>
+<td>16.8%</td>
+<td>-6022</td>
+<td>=-7531*2/3-1000</td>
+</tr>
+<tr class="odd">
+<td>横移动</td>
+<td>1.4%</td>
+<td>-1000</td>
+<td>支出立直棒</td>
+</tr>
+<tr class="even">
+<td>流局</td>
+<td>26.2%</td>
+<td>-200</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>追立局收支为</p>
+<p><span class="math display">\[0.345x + 0.1 \cdot (-7995) + 0.111 \cdot
+(-8995) + 0.168 \cdot (-6022) + 0.014 \cdot (-1000) + 0.262 \cdot
+(-200)\]</span></p>
+<p><span class="math display">\[ = 0.345x-2876 \]</span></p>
+<p>从表15-2查得全弃的局收支为-2200。</p>
+<p>令<span class="math inline">\(0.345x-2876=-2200\)</span>， 解得<span
+class="math inline">\(x = 1959\)</span>。</p>
+<p>而从表16-1直接查得的要求打点为2900。<strong>和计算出的要求打点有近1000点的差距。</strong></p>
+<h3
+id="以愚形子对子北114巡宣言牌铳率10为例">以愚形、子对子北1、14巡、宣言牌铳率10%为例</h3>
+<p>从表18-5查得和了率为26.4%，放铳率为25.6%，被自摸率为24.3%，横移动率为6.0%，流局率为17.7%。</p>
+<p>从表14-1查得平均铳点为7995。</p>
+<p>从表14-1查得对手平均自摸打点为7531，乘以1/3即为自己被自摸损失点数。</p>
+<p>以一张表格来总结：</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>概率</th>
+<th>期望</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>和牌</td>
+<td>26.4%</td>
+<td>x</td>
+<td>令要求打点为x</td>
+</tr>
+<tr class="even">
+<td>宣言牌放铳</td>
+<td>10.0%</td>
+<td>-7995</td>
+<td>将放铳分为两类，若宣言牌放铳则无需支出立直棒</td>
+</tr>
+<tr class="odd">
+<td>宣言成功后放铳</td>
+<td>15.6%</td>
+<td>-8995</td>
+<td>宣言成功后放铳需额外支出立直棒</td>
+</tr>
+<tr class="even">
+<td>被自摸</td>
+<td>24.3%</td>
+<td>-3510</td>
+<td>=-7531*1/3-1000</td>
+</tr>
+<tr class="odd">
+<td>横移动</td>
+<td>6.0%</td>
+<td>-1000</td>
+<td>支出立直棒</td>
+</tr>
+<tr class="even">
+<td>流局</td>
+<td>17.7%</td>
+<td>-200</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>追立局收支为</p>
+<p><span class="math display">\[0.264x + 0.1 \cdot (-7995) + 0.156 \cdot
+(-8995) + 0.243 \cdot (-3510) + 0.06 \cdot (-1000) + 0.177 \cdot
+(-200)\]</span></p>
+<p><span class="math display">\[ = 0.264x-3151 \]</span></p>
+<p>从表15-2查得全弃的局收支为-1500。</p>
+<p>令<span class="math inline">\(0.264x-3151=-1500\)</span>， 解得<span
+class="math inline">\(x = 6254\)</span>。</p>
+<p>而从表16-1直接查得的要求打点为6400。<strong>和计算出的要求打点的差距不到200点</strong>，考虑到舍入误差，两者是相符的。</p>
+<h1
+id="计算出的要求打点和直接查得的要求打点的比较">计算出的要求打点和直接查得的要求打点的比较</h1>
+<p>计算值精确到百位。</p>
+<h2 id="两面">两面</h2>
+<h3 id="子对子">子对子</h3>
+<p>8巡</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>1500</td>
+<td>1400</td>
+<td>100</td>
+<td></td>
+<td>2500</td>
+<td>2400</td>
+<td>100</td>
+<td></td>
+<td>3800</td>
+<td>3700</td>
+<td>100</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>1900</td>
+<td>1800</td>
+<td>100</td>
+<td></td>
+<td>3300</td>
+<td>3200</td>
+<td>100</td>
+<td></td>
+<td>5000</td>
+<td>5000</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>2300</td>
+<td>2200</td>
+<td>100</td>
+<td></td>
+<td>4000</td>
+<td>4000</td>
+<td>0</td>
+<td></td>
+<td>6200</td>
+<td>6300</td>
+<td>-100</td>
+</tr>
+</tbody>
+</table>
+<p>11巡</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>1100</td>
+<td>1300</td>
+<td>-200</td>
+<td></td>
+<td>2200</td>
+<td>2400</td>
+<td>-200</td>
+<td></td>
+<td>3500</td>
+<td>3700</td>
+<td>-200</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>1700</td>
+<td>1800</td>
+<td>-100</td>
+<td></td>
+<td>3200</td>
+<td>3200</td>
+<td>0</td>
+<td></td>
+<td>5000</td>
+<td>5100</td>
+<td>-100</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>2000</td>
+<td>2200</td>
+<td>-200</td>
+<td></td>
+<td>3900</td>
+<td>4100</td>
+<td>-200</td>
+<td></td>
+<td>6200</td>
+<td>6400</td>
+<td>-200</td>
+</tr>
+</tbody>
+</table>
+<p>14巡</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>500</td>
+<td>1100</td>
+<td>-600</td>
+<td></td>
+<td>1800</td>
+<td>2300</td>
+<td>-500</td>
+<td></td>
+<td>3500</td>
+<td>3800</td>
+<td>-300</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>900</td>
+<td>1700</td>
+<td>-800</td>
+<td></td>
+<td>2800</td>
+<td>3400</td>
+<td>-600</td>
+<td></td>
+<td>5100</td>
+<td>5500</td>
+<td>-400</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>1500</td>
+<td>2300</td>
+<td>-800</td>
+<td></td>
+<td>3900</td>
+<td>4400</td>
+<td>-500</td>
+<td></td>
+<td>7000</td>
+<td>7100</td>
+<td>-100</td>
+</tr>
+</tbody>
+</table>
+<h3 id="子对亲">子对亲</h3>
+<p>8巡</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>1500</td>
+<td>1400</td>
+<td>100</td>
+<td></td>
+<td>2800</td>
+<td>2800</td>
+<td>0</td>
+<td></td>
+<td>4500</td>
+<td>4500</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>2000</td>
+<td>1900</td>
+<td>100</td>
+<td></td>
+<td>3900</td>
+<td>3800</td>
+<td>100</td>
+<td></td>
+<td>6300</td>
+<td>6300</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>2400</td>
+<td>2300</td>
+<td>100</td>
+<td></td>
+<td>4800</td>
+<td>4800</td>
+<td>0</td>
+<td></td>
+<td>7800</td>
+<td>7900</td>
+<td>-100</td>
+</tr>
+</tbody>
+</table>
+<p>11巡</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>1400</td>
+<td>1500</td>
+<td>-100</td>
+<td></td>
+<td>2900</td>
+<td>2900</td>
+<td>0</td>
+<td></td>
+<td>4700</td>
+<td>4800</td>
+<td>-100</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>2000</td>
+<td>2100</td>
+<td>-100</td>
+<td></td>
+<td>4100</td>
+<td>4200</td>
+<td>-100</td>
+<td></td>
+<td>6700</td>
+<td>6800</td>
+<td>-100</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>2500</td>
+<td>2700</td>
+<td>-200</td>
+<td></td>
+<td>5200</td>
+<td>5300</td>
+<td>-100</td>
+<td></td>
+<td>8500</td>
+<td>8700</td>
+<td>-200</td>
+</tr>
+</tbody>
+</table>
+<p>14巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>800</td>
+<td>1700</td>
+<td>-900</td>
+<td></td>
+<td>2800</td>
+<td>3400</td>
+<td>-600</td>
+<td></td>
+<td>5200</td>
+<td>5500</td>
+<td>-300</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>1400</td>
+<td>2700</td>
+<td>-1300</td>
+<td></td>
+<td>4100</td>
+<td>5100</td>
+<td>-1000</td>
+<td></td>
+<td>7500</td>
+<td>8100</td>
+<td>-600</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>2100</td>
+<td>3500</td>
+<td>-1400</td>
+<td></td>
+<td>5600</td>
+<td>6600</td>
+<td>-1000</td>
+<td></td>
+<td>10000</td>
+<td>10500</td>
+<td>-500</td>
+</tr>
+</tbody>
+</table>
+<h3 id="亲对子">亲对子</h3>
+<p>8巡</p>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>500</td>
+<td>400</td>
+<td>100</td>
+<td></td>
+<td>1300</td>
+<td>1200</td>
+<td>100</td>
+<td></td>
+<td>2300</td>
+<td>2300</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>600</td>
+<td>500</td>
+<td>100</td>
+<td></td>
+<td>1700</td>
+<td>1700</td>
+<td>0</td>
+<td></td>
+<td>3100</td>
+<td>3100</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>800</td>
+<td>700</td>
+<td>100</td>
+<td></td>
+<td>2200</td>
+<td>2100</td>
+<td>100</td>
+<td></td>
+<td>4000</td>
+<td>3900</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>11巡</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>400</td>
+<td>600</td>
+<td>-200</td>
+<td></td>
+<td>1300</td>
+<td>1500</td>
+<td>-200</td>
+<td></td>
+<td>2400</td>
+<td>2500</td>
+<td>-100</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>600</td>
+<td>800</td>
+<td>-200</td>
+<td></td>
+<td>1800</td>
+<td>2100</td>
+<td>-300</td>
+<td></td>
+<td>3400</td>
+<td>3600</td>
+<td>-200</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>800</td>
+<td>1100</td>
+<td>-300</td>
+<td></td>
+<td>2300</td>
+<td>2700</td>
+<td>-400</td>
+<td></td>
+<td>4300</td>
+<td>4600</td>
+<td>-300</td>
+</tr>
+</tbody>
+</table>
+<p>14巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>-200</td>
+<td>900</td>
+<td>-1100</td>
+<td></td>
+<td>1000</td>
+<td>1900</td>
+<td>-900</td>
+<td></td>
+<td>2500</td>
+<td>3200</td>
+<td>-700</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>300</td>
+<td>1400</td>
+<td>-1100</td>
+<td></td>
+<td>2000</td>
+<td>2900</td>
+<td>-900</td>
+<td></td>
+<td>4000</td>
+<td>4800</td>
+<td>-800</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>700</td>
+<td>2000</td>
+<td>-1300</td>
+<td></td>
+<td>2800</td>
+<td>3900</td>
+<td>-1100</td>
+<td></td>
+<td>5500</td>
+<td>6200</td>
+<td>-700</td>
+</tr>
+</tbody>
+</table>
+<h2 id="愚形">愚形</h2>
+<h3 id="子对子-1">子对子</h3>
+<p>8巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>3700</td>
+<td>3600</td>
+<td>100</td>
+<td></td>
+<td>5200</td>
+<td>5100</td>
+<td>100</td>
+<td></td>
+<td>7100</td>
+<td>6900</td>
+<td>200</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>4700</td>
+<td>4600</td>
+<td>100</td>
+<td></td>
+<td>6700</td>
+<td>6600</td>
+<td>100</td>
+<td></td>
+<td>9300</td>
+<td>9100</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>5600</td>
+<td>5600</td>
+<td>0</td>
+<td></td>
+<td>8100</td>
+<td>8100</td>
+<td>0</td>
+<td></td>
+<td>11300</td>
+<td>11300</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>11巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>3400</td>
+<td>3500</td>
+<td>-100</td>
+<td></td>
+<td>5000</td>
+<td>5000</td>
+<td>0</td>
+<td></td>
+<td>7000</td>
+<td>7000</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>4700</td>
+<td>4600</td>
+<td>100</td>
+<td></td>
+<td>6900</td>
+<td>6800</td>
+<td>100</td>
+<td></td>
+<td>9600</td>
+<td>9500</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>5500</td>
+<td>5600</td>
+<td>-100</td>
+<td></td>
+<td>8300</td>
+<td>8400</td>
+<td>-100</td>
+<td></td>
+<td>11700</td>
+<td>11900</td>
+<td>-200</td>
+</tr>
+</tbody>
+</table>
+<p>14巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>2700</td>
+<td>2700</td>
+<td>0</td>
+<td></td>
+<td>4500</td>
+<td>4500</td>
+<td>0</td>
+<td></td>
+<td>6700</td>
+<td>6700</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>3800</td>
+<td>3900</td>
+<td>-100</td>
+<td></td>
+<td>6300</td>
+<td>6400</td>
+<td>-100</td>
+<td></td>
+<td>9300</td>
+<td>9500</td>
+<td>-200</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>5100</td>
+<td>5000</td>
+<td>100</td>
+<td></td>
+<td>8300</td>
+<td>8200</td>
+<td>100</td>
+<td></td>
+<td>12300</td>
+<td>12200</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<h3 id="子对亲-1">子对亲</h3>
+<p>8巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>4300</td>
+<td>4200</td>
+<td>100</td>
+<td></td>
+<td>6300</td>
+<td>6200</td>
+<td>100</td>
+<td></td>
+<td>8800</td>
+<td>8700</td>
+<td>100</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>5700</td>
+<td>5600</td>
+<td>100</td>
+<td></td>
+<td>8500</td>
+<td>8400</td>
+<td>100</td>
+<td></td>
+<td>12000</td>
+<td>11900</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>6800</td>
+<td>6900</td>
+<td>-100</td>
+<td></td>
+<td>10400</td>
+<td>10400</td>
+<td>0</td>
+<td></td>
+<td>14800</td>
+<td>14900</td>
+<td>-100</td>
+</tr>
+</tbody>
+</table>
+<p>11巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>4500</td>
+<td>4400</td>
+<td>100</td>
+<td></td>
+<td>6700</td>
+<td>6600</td>
+<td>100</td>
+<td></td>
+<td>9400</td>
+<td>9300</td>
+<td>100</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>6100</td>
+<td>6000</td>
+<td>100</td>
+<td></td>
+<td>9200</td>
+<td>9100</td>
+<td>100</td>
+<td></td>
+<td>13100</td>
+<td>13000</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>7500</td>
+<td>7500</td>
+<td>0</td>
+<td></td>
+<td>11500</td>
+<td>11400</td>
+<td>100</td>
+<td></td>
+<td>16400</td>
+<td>16300</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>14巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>4100</td>
+<td>4100</td>
+<td>0</td>
+<td></td>
+<td>6700</td>
+<td>6600</td>
+<td>100</td>
+<td></td>
+<td>9800</td>
+<td>9800</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>5700</td>
+<td>5900</td>
+<td>-200</td>
+<td></td>
+<td>9300</td>
+<td>9500</td>
+<td>-200</td>
+<td></td>
+<td>13800</td>
+<td>14000</td>
+<td>-200</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>7500</td>
+<td>7600</td>
+<td>-100</td>
+<td></td>
+<td>12100</td>
+<td>12200</td>
+<td>-100</td>
+<td></td>
+<td>17900</td>
+<td>18000</td>
+<td>-100</td>
+</tr>
+</tbody>
+</table>
+<h3 id="亲对子-1">亲对子</h3>
+<p>8巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>2600</td>
+<td>2500</td>
+<td>100</td>
+<td></td>
+<td>3700</td>
+<td>3700</td>
+<td>0</td>
+<td></td>
+<td>5200</td>
+<td>5100</td>
+<td>100</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>3200</td>
+<td>3200</td>
+<td>0</td>
+<td></td>
+<td>4800</td>
+<td>4800</td>
+<td>0</td>
+<td></td>
+<td>6800</td>
+<td>6800</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>3900</td>
+<td>3800</td>
+<td>100</td>
+<td></td>
+<td>6000</td>
+<td>5900</td>
+<td>100</td>
+<td></td>
+<td>8600</td>
+<td>8500</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>11巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>2800</td>
+<td>2700</td>
+<td>100</td>
+<td></td>
+<td>4100</td>
+<td>4000</td>
+<td>100</td>
+<td></td>
+<td>5700</td>
+<td>5600</td>
+<td>100</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>3600</td>
+<td>3600</td>
+<td>0</td>
+<td></td>
+<td>5400</td>
+<td>5400</td>
+<td>0</td>
+<td></td>
+<td>7700</td>
+<td>7700</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>4300</td>
+<td>4400</td>
+<td>-100</td>
+<td></td>
+<td>6700</td>
+<td>6800</td>
+<td>-100</td>
+<td></td>
+<td>9600</td>
+<td>9700</td>
+<td>-100</td>
+</tr>
+</tbody>
+</table>
+<p>14巡</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>宣言牌铳率</th>
+<th>0%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>10%</th>
+<th></th>
+<th></th>
+<th></th>
+<th>20%</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+<td></td>
+<td>计算值</td>
+<td>查表值</td>
+<td>差</td>
+</tr>
+<tr class="even">
+<td>北0</td>
+<td>2500</td>
+<td>2600</td>
+<td>-100</td>
+<td></td>
+<td>4000</td>
+<td>4100</td>
+<td>-100</td>
+<td></td>
+<td>5900</td>
+<td>6100</td>
+<td>-200</td>
+</tr>
+<tr class="odd">
+<td>北1</td>
+<td>3700</td>
+<td>3700</td>
+<td>0</td>
+<td></td>
+<td>5900</td>
+<td>5900</td>
+<td>0</td>
+<td></td>
+<td>8700</td>
+<td>8700</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>北2</td>
+<td>4900</td>
+<td>4800</td>
+<td>100</td>
+<td></td>
+<td>7700</td>
+<td>7600</td>
+<td>100</td>
+<td></td>
+<td>11300</td>
+<td>11200</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<h2 id="总结">总结</h2>
+<p>两面追立的数据，8巡基本符合，11巡略有差距，14巡差距很大；愚形追立的数据全部基本符合。</p>
+<p>另外，副露进攻的数据也是这样。</p>
+<p>可以复现愚形追立、愚形副露进攻的要求打点，但无法复现两面追立、两面副露进攻的要求打点。推测是两面进攻的和了率、放铳率等各种概率的数据（表16-8）有问题。</p>
+<p>理由1：问题只出在两面追立、两面副露进攻，它们都用到了表16-8。</p>
+<p>理由2：8巡愚形流局率高于两面流局率，而11巡、14巡愚形流局率反而低于两面流局率，与“两个人的听牌形越好，越容易有人和牌”的直觉不符。（直觉不一定对，正如“pt较少时故意掉段有利”的直觉）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%97%A5%E9%BA%BB/" rel="tag"># 日麻</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/23/%E4%B8%BA%E4%BA%86%E6%8F%90%E9%AB%98%E6%89%93%E7%82%B9%E8%80%8C%E6%89%93%E5%8D%B1%E9%99%A9%E7%89%8C%E8%BF%BD%E7%AB%8B%E5%90%97/" rel="prev" title="为了提高打点而打危险牌追立吗">
+                  <i class="fa fa-chevron-left"></i> 为了提高打点而打危险牌追立吗
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">81100118</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
