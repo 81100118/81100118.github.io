@@ -116,7 +116,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -156,6 +156,227 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2022/09/28/deliberate-downgrade/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="81100118">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/28/deliberate-downgrade/" class="post-title-link" itemprop="url">Pt很低即将掉段时，应该故意掉段吗</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-28 11:06:38 / 修改时间：14:32:54" itemprop="dateCreated datePublished" datetime="2022-09-28T11:06:38+08:00">2022-09-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在天凤，段位越高，升段需要到达的pt越高。每一段的原点是升段需要到达的pt的一半，因此原点也随段位的升高而上升。有时会出现只剩数十pt的情况，如果直接打回原点，需要的pt甚至比故意掉段还多。例如七段原点是1400，升段目标为2800，八段原点是1600，升段目标为3200。在八段100pt时，直接打回八段原点需要1500pt，而故意掉回七段、再升到八段却只要1400pt。在雀魂，这种现象更加夸张。圣1是2000/4000，圣2是3000/6000，而圣3是4500/9000，每段的pt比前一段足足多出了一半。</p>
+<p>乍看起来，在pt所剩无几、<strong>直接打回原点所需pt</strong>比<strong>故意掉段再升段所需pt</strong>还多时，比起正常打牌期待直接回原点，故意掉段会更有利。回到当前段位原点所需的pt变少了，而且末位的惩罚也更小，上分更容易。真是这样的吗？如果是，那么故意掉段有利的pt阈值是多少呢？</p>
+<p>首先需要明确“有利”的判断标准。现实中我们遇到的一个问题是：从某个段位某个pt（例如七段1400pt）开始，到升到某个目标段位（例如天凤位）为止，对局数越少越好。一个判断标准是，上述对局数的期望值越低越好；另一个判断标准是，在一定的对局数（例如10000个半庄）内能升到目标段位的概率越高越好，毕竟人的时间是有限的。前者只涉及期望值，计算比较方便；而后者涉及对局数的具体分布，计算比较困难，适合用模拟的方法估计。<strong>本文以对局数的期望值来衡量是否有利。</strong></p>
+<p>要计算对局数的期望值，需要做出一些限制和假设。限制只打可能的最高等级的场次，只打东南战，假定每一次对局均为独立的，一场对局的结果不会影响其他对局，且对于每一次对局，获得各个顺位的概率是固定不变的。例如，某玩家在雀圣时只打三王南，每次对局都有0.35的概率吃1，0.33的概率吃2，0.32的概率吃3。</p>
+<p>考虑“从某段某pt开始不断对局，直到升段为止”这一场景。计算最后升段时的对局数期望。</p>
+<p>令 <span class="math inline">\(origin_g\)</span> 等于 g 段原点，<span
+class="math inline">\(goal_g\)</span> 等于从 <span
+class="math inline">\(g\)</span> 段升到 <span
+class="math inline">\((g+1)\)</span> 段需要到达的pt，<span
+class="math inline">\(n(g,pt)\)</span> 等于从 <span
+class="math inline">\(g\)</span> 段 <span
+class="math inline">\(pt\)</span> pt开始直到升到 <span
+class="math inline">\((g+1)\)</span> 段时的对局数期望。</p>
+<p>为了方便计算，pt变动只和顺位有关，和持有点数无关。令 <span
+class="math inline">\(m\)</span> 位率为 <span
+class="math inline">\(p_m\)</span>，在 <span
+class="math inline">\(g\)</span> 段时 <span
+class="math inline">\(m\)</span> 位pt变动为 <span
+class="math inline">\(c_{m,g}\)</span>，<span
+class="math inline">\(c_{m,g}\)</span>为正值表示pt增加，为负值表示pt减少。<span
+class="math inline">\(m\in \{1,2,3\}\)</span>，<span
+class="math inline">\(p_m\)</span> 和 <span
+class="math inline">\(c_{m,g}\)</span> 已知。</p>
+<p>先考虑边界情况。</p>
+<p>若 <span class="math inline">\(pt \geq
+goal_g\)</span>，则已经升段，不需要再对局了，因此 <span
+class="math inline">\(n(g,pt) = 0\)</span>。</p>
+<p>若 <span class="math inline">\(pt &lt;
+0\)</span>，则已经降段，因此对局数期望等于“从 <span
+class="math inline">\((g-1)\)</span> 段原点回到 <span
+class="math inline">\(g\)</span> 段原点的对局数期望”加上“从 <span
+class="math inline">\(g\)</span> 段原点开始升到 <span
+class="math inline">\((g+1)\)</span> 段的对局数期望”，即</p>
+<p><span class="math display">\[n(g,pt) = n(g-1,origin_{g-1}) +
+n(g,origin_g)\]</span></p>
+<p>然后考虑中间情况（<span class="math inline">\(0\leq pt &lt;
+goal_g\)</span>）。进行一场对局后，有 <span
+class="math inline">\(p_1\)</span> 概率吃1，吃1后，pt增加<span
+class="math inline">\(c_{1,g}\)</span>，因此升段对局数期望变成 <span
+class="math inline">\(n(g,
+pt+c_{1,g})\)</span>。吃2、吃3的情况同理。另外，无论这场对局顺位如何，对局数都增加了1。所以我们有：</p>
+<p><span class="math display">\[n(g,pt)= 1 + \sum_{m = 1}^3 p_m \cdot
+n(g,pt+c_{m,g} )\]</span>
+<!-- $$n(g,pt)= p_1 \cdot n(g,pt+c_{1,g} )+ p_2 \cdot n(g,pt+c_{2,g} )+ p_3 \cdot n(g,pt+c_{3,g}) + 1$$
+--> 现在加上“如果当前pt小于某个阈值，则故意掉段”，令这个阈值为
+t。若<span
+class="math inline">\(0≤pt&lt;t\)</span>，则故意降段，不计故意降段的挂机对局数（挂机期间无需花费精力），则和之前
+<span class="math inline">\(pt&lt;0\)</span> 的情况是一样的。<span
+class="math inline">\(pt\geq goal\)</span> 的情况不变。“中间情况”的
+<span class="math inline">\(pt\)</span> 取值范围变成了 <span
+class="math inline">\(t\leq
+pt&lt;goal\)</span>。总的来说，和无故意掉段相比，只是 <span
+class="math inline">\(pt\)</span> 分段的点发生了变化。即： <span
+class="math display">\[n(g,pt)=\begin{cases}
+0 \quad &amp;pt\geq goal_g, \\
+1 + \sum_{m = 1}^3 p_m \cdot n(g,pt+c_{m,g} ) &amp;  t \leq
+pt&lt;goal_g,\\
+n(g-1,origin_{g-1}) + n(g,origin_g) \quad &amp;pt&lt;t,
+\end{cases}\]</span> “无故意掉段”可以看作是 <span
+class="math inline">\(t=0\)</span> 的特殊情况。</p>
+<p>这是一个高阶差分方程，可以将<span
+class="math inline">\(goal_g\)</span>, <span
+class="math inline">\(origin_g\)</span>, <span
+class="math inline">\(p_m\)</span>, <span
+class="math inline">\(c_{m,g}\)</span>的具体数值代入，用数值方法（迭代法）解，将
+<span class="math inline">\(n(g,pt)\)</span> 用含有 <span
+class="math inline">\(n(g-1,origin_{g-1})\)</span>
+的代数式来表示，即将“升段的对局数期望”用“从更低一段原点回到当前段位的对局数期望”来表示。这样，“每一段从原点升段的对局数期望”和“之前一段从原点升段的对局数期望”就形成了递推关系。</p>
+<p><strong>例</strong>
+某人王座1、2、3位率分别为0.35、0.35、0.3，吃1增加277pt，吃2
+pt不变，圣1时吃3扣减277pt，当前段位每高一段，多扣25pt。求 (a)
+无故意掉段，(b) 圣3时小于500pt时掉段，(c) 圣3时小于1000pt时故意掉段，(d)
+圣3时小于1500pt时故意掉段
+这三种策略中，哪个从圣3原点升魂天对局数期望最小。</p>
+<p><strong>解</strong>
+先计算从圣1原点升圣2的对局数期望（无故意掉段）。</p>
+<p>令</p>
+<p><span class="math inline">\(g=圣1,pt=2000,th=0,\)</span> <span
+class="math inline">\(goal_g=4000,origin_g=2000,\)</span></p>
+<p><span class="math inline">\(p_1=0.35,p_2=0.35,p_3=0.3,\)</span>
+$c_{1,g}=277,c_{2,g}=0,c_{3,g}=-277, $</p>
+<p>则</p>
+<p><span class="math display">\[n(圣1,pt)=\begin{cases}
+0 \quad &amp;pt\geq 4000, \\
+1 + 0.35 \cdot n(圣1,pt+277 ) + 0.35 \cdot n(圣1, pt) + 0.3 \cdot n(圣1,
+pt-277) &amp;  t \leq pt&lt;4000,\\
+n(豪3,1800) + n(圣1,2000) \quad &amp;pt&lt;t,
+\end{cases}\]</span></p>
+<p>解得 <span
+class="math display">\[n(圣1,2000)=113.383+0.29136n(豪3,1800)\]</span>
+同理可得圣2原点升圣3、圣3原点升魂天的对局数期望： <span
+class="math display">\[n(圣2,3000) =255.764+0.47915n(圣1,2000)\]</span>
+<span class="math display">\[n(圣3,4500)
+=798.064+1.19380n(圣2,3000)\]</span> 依次代入可得 <span
+class="math display">\[n(圣3,4500) =1168.25+0.16667n(豪3,1800)\]</span>
+若在圣3小于500pt时故意掉段，则 <span
+class="math display">\[\begin{aligned}n’(圣3,4500)&amp;=752.613+1.32526n(圣2,3000)\\
+   &amp;=1163.56+0.18501n(豪3,1800)
+\end{aligned}\]</span></p>
+<p>当 <span class="math inline">\(n(豪3,1800) &lt; 256\)</span>
+时，<span
+class="math inline">\(n’&lt;n\)</span>，即若豪3回圣对局数期望小于256，圣3时小于500pt故意掉段有利，反之不故意掉段有利。</p>
+<p>若在圣3小于1000pt时故意掉段，则 <span
+class="math display">\[\begin{aligned}n’’(圣3,4500) &amp;=
+707.402+1.49309n(圣2,3000) \\
+&amp;= 1170.40+0.20844n(豪3,1800)
+\end{aligned}\]</span></p>
+<p>常数项及一次项均分别大于 <span class="math inline">\(n\)</span>
+的常数项及一次项，因此无论豪3回圣对局数期望如何，圣3时小于1000pt故意掉段均不利。</p>
+<p>若在圣3小于1500pt时故意掉段，则 <span
+class="math display">\[\begin{aligned}n’’&#39;(圣3,4500) &amp;=
+662.448+1.71470n(圣2,3000) \\
+&amp;= 1194.16+0.23938n(豪3,1800)
+\end{aligned}\]</span></p>
+<p>常数项及一次项均分别大于 <span class="math inline">\(n\)</span>
+的常数项及一次项，因此无论豪3回圣对局数期望如何，圣3时小于1500pt故意掉段均不利。</p>
+<p>综上所述，若豪3回圣对局数期望小于256，则采用策略 (b)
+圣3时小于500pt故意掉段，否则采用策略 (a) 无故意掉段。</p>
+<p>当豪3回圣对局数期望为200时，各策略期望对局数如下表：</p>
+<table>
+<thead>
+<tr class="header">
+<th>策略</th>
+<th>期望对局数</th>
+<th>与策略 (a) 的差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(a) 无故意掉段</td>
+<td>1201.58</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>(b) 圣3 &lt;500pt</td>
+<td>1200.56</td>
+<td>-1.02</td>
+</tr>
+<tr class="odd">
+<td>(c) 圣3 &lt;1000pt</td>
+<td>1212.09</td>
+<td>+10.51</td>
+</tr>
+<tr class="even">
+<td>(d) 圣3 &lt;1500pt</td>
+<td>1242.04</td>
+<td>+40.46</td>
+</tr>
+</tbody>
+</table>
+<p>由这个例子可以看出，在pt所剩无几时，故意掉段并非一定有利。而且故意掉段的好处有限，只有少打一两个半庄的程度而已。</p>
+<p>另外，一个人的1、2、3位率会对结果产生很大影响。大致上是一个人安定段位越高，越倾向于在低pt时故意掉段。但是，如果一个人安定段位很高的话，基本就直升魂天了，也很难出现低pt的情况吧。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -937,98 +1158,6 @@ R1809，接着在特上继续狗到了1505/1600pt。此时离五段只差一个1
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/11/15/477%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2018/11/13/All-Last-%E7%9A%84%E6%96%B0%E6%80%9D%E8%B7%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="81100118">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="81100118的博客">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 81100118的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/11/13/All-Last-%E7%9A%84%E6%96%B0%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">All Last 的新思路</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-11-13 17:52:14" itemprop="dateCreated datePublished" datetime="2018-11-13T17:52:14+08:00">2018-11-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-18 19:45:18" itemprop="dateModified" datetime="2022-07-18T19:45:18+08:00">2022-07-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%97%A5%E9%BA%BB/" itemprop="url" rel="index"><span itemprop="name">日麻</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>南4，主视角40500top，对家30100二位，另两家低分34，下家为亲。对家刚碰中。主视角是个无dora的两向听。主视角应该怎么打？是继续进攻，还是全防对家？</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/11/13/All-Last-%E7%9A%84%E6%96%B0%E6%80%9D%E8%B7%AF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
