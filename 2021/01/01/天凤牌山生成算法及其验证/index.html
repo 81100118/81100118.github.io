@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://81100118.github.io/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc8.png">
 <meta property="og:image" content="https://81100118.github.io/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc9.png">
 <meta property="article:published_time" content="2021-01-01T12:40:32.000Z">
-<meta property="article:modified_time" content="2021-01-05T11:56:55.379Z">
+<meta property="article:modified_time" content="2023-02-24T12:38:10.630Z">
 <meta property="article:author" content="81100118">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://81100118.github.io/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc1.png">
@@ -217,7 +217,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2021-01-05 19:56:55" itemprop="dateModified" datetime="2021-01-05T19:56:55+08:00">2021-01-05</time>
+      <time title="修改时间：2023-02-24 20:38:10" itemprop="dateModified" datetime="2023-02-24T20:38:10+08:00">2023-02-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -255,20 +255,20 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/ZCplayground/p/8157
 - mtRoot
 的具体生成方式角田并没有公开，如果公开了可能可以伪造种子来知晓牌山。</p>
 <p>2.<code>mtLocal</code>：用 mtRoot
-生成的随机数，作为新的种子。（811注：mtRoot和mtLocal应该是随机数生成器的对象，而不是种子
-3.<code>src</code> 数组，这个数组用于用于 SHA 512 散列算法。内容是以
-mtLocal 做种子，288 次随机数算法取的一长串二进制流。 4.<code>rnd</code>
-数组：长度为 144。会对 src 进行 SHA 512 散列算法，RND
-是存放算法的结果的数组。之后要利用 RND
+生成的随机数，作为新的种子。（811注：mtRoot和mtLocal应该是随机数生成器的对象，而不是种子</p>
+<p>3.<code>src</code> 数组，这个数组用于用于 SHA 512 散列算法。内容是以
+mtLocal 做种子，288 次随机数算法取的一长串二进制流。</p>
+<p>4.<code>rnd</code> 数组：长度为 144。会对 src 进行 SHA 512
+散列算法，RND 是存放算法的结果的数组。之后要利用 RND
 数组生成牌山。此外，每一局投的骰子也是 rnd 里面来的。 - rnd
 数组的生成结果由于散列算法的性质，保证了公平性。</p>
 <p>5.<code>yama</code> 数组，长度 136
 。就是牌山本体。思路很简单，一开始里面的数据初始化是 123456
 这样的等差数列，然后对RND数组的元素进行求余后不断 swap
-就可以打乱（shuffle）。
-获取东一局的游戏牌山需要从第1步执行到第5步，第二局（无论是东一一本场还是东二）及之后只需要执行第
-3 步到第 5 步。
-虽然说第三步里面有随机要素，但其实四个人进到一桌坐下来，本质上这一局的牌山都已经安排好了。</p>
+就可以打乱（shuffle）。</p>
+<p>获取东一局的游戏牌山需要从第1步执行到第5步，第二局（无论是东一一本场还是东二）及之后只需要执行第
+3 步到第 5 步。</p>
+<p>虽然说第三步里面有随机要素，但其实四个人进到一桌坐下来，本质上这一局的牌山都已经安排好了。</p>
 </blockquote>
 <p>我再来总结一下流程：</p>
 <ul>
@@ -289,8 +289,9 @@ id="玩家可以进行哪些检定以及具体检定方法">玩家可以进行�
 <li><p>天凤在对局前公开了席顺和mtLocal的种子的SHA-512
 hash，玩家可以在对局结束后从牌谱文件里找出这个种子，和席顺一起自己hash一下，和天凤对局前公开的hash核对是否相同。</p></li>
 </ol>
-<p>具体检定方法： 1. 牌山。 (a)
-打一把真人对战，获取牌谱链接。牌谱链接形如“<a
+<p>具体检定方法： 1. 牌山。</p>
+<ol type="a">
+<li><p>打一把真人对战，获取牌谱链接。牌谱链接形如“<a
 target="_blank" rel="noopener" href="https://tenhou.net/0/?log=xxxxxxxxgm-xxxx-xxxx-xxxxxxxx&amp;tw=x"
 class="uri">https://tenhou.net/0/?log=xxxxxxxxgm-xxxx-xxxx-xxxxxxxx&amp;tw=x</a>”。把“log=”后的东西拼接到“<a
 target="_blank" rel="noopener" href="https://tenhou.net/0/log/find.cgi?log="
@@ -301,26 +302,28 @@ class="uri">https://tenhou.net/0/log/find.cgi?log=xxxxxxxxgm-xxxx-xxxx-xxxxxxxx&
 target="_blank" rel="noopener" href="http://tenhou.net/0/?log=2016100120gm-00a9-0000-fca091df"
 class="uri">http://tenhou.net/0/?log=2016100120gm-00a9-0000-fca091df</a>。我们在浏览器地址栏输入<a
 target="_blank" rel="noopener" href="https://tenhou.net/0/log/find.cgi?log=2016100120gm-00a9-0000-fca091df&amp;tw=0"
-class="uri">https://tenhou.net/0/log/find.cgi?log=2016100120gm-00a9-0000-fca091df&amp;tw=0</a>，即可下载牌谱文件。
-(b)
-这个牌谱文件是gzip格式的。先解压，然后用文本编辑器打开，可以看到seed="mt19937ar-sha512-n288-base64,一大堆东西"。把那一大堆东西复制出来，进行base64解码，即可得到mtLocal的种子。（注：从某些途径获取的牌谱是plaintext而不是gz）
-例：将刚刚下载的牌谱解压并使用某文本编辑器打开 <img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc1.png" class="">
-我们要的“一大堆东西”找到了。把它base64解码。以Python为例 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">seed_str = <span class="string">&#x27;Ov9f...Hcjm&#x27;</span></span><br><span class="line">seed_bytes = base64.b64decode(seed_str)</span><br></pre></td></tr></table></figure>
-(c) 解码之后我们得到了一个2496Byte的byte
+class="uri">https://tenhou.net/0/log/find.cgi?log=2016100120gm-00a9-0000-fca091df&amp;tw=0</a>，即可下载牌谱文件。</p></li>
+<li><p>这个牌谱文件是gzip格式的。先解压，然后用文本编辑器打开，可以看到seed="mt19937ar-sha512-n288-base64,一大堆东西"。把那一大堆东西复制出来，进行base64解码，即可得到mtLocal的种子。（注：从某些途径获取的牌谱是plaintext而不是gz）</p></li>
+</ol>
+<p>例：将刚刚下载的牌谱解压并使用某文本编辑器打开 <img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc1.png" class="">
+我们要的“一大堆东西”找到了。把它base64解码。以Python为例</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">seed_str = <span class="string">&#x27;Ov9f...Hcjm&#x27;</span></span><br><span class="line">seed_bytes = base64.b64decode(seed_str)</span><br></pre></td></tr></table></figure> (c) 解码之后我们得到了一个2496Byte的byte
 object。将它分割成624个无符号4Byte整数。在类型转换到整数时，我们必须注意endianness。角田的服务器是little
 endian的，所以我们也要按照little endian来转换成整数。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(seed_bytes) // <span class="number">4</span>):</span><br><span class="line">    result.append(<span class="built_in">int</span>.from_bytes(seed_bytes[i*<span class="number">4</span>:i*<span class="number">4</span>+<span class="number">4</span>], byteorder=<span class="string">&#x27;little&#x27;</span>))</span><br></pre></td></tr></table></figure> (d)
 然后我们用这个int
-array初始化mtRand。如果想使用C语言，可以直接调用init_by_array函数。如果想使用Python，虽然Python的random的实现刚好是MT算法，但是似乎没有提供init_by_array方法。可能需要自己实现init_by_array。C语言代码略。Python代码请看最后附录。
-(e)
-初始化mtRand后，我们就可以按照角田的代码，<strong>对每一小局</strong>，生成288个32bit随机数，共9216bit，再将9216bit以1024bit为单位分9次用SHA-512
-hash到512bit*9 = 4608bit = 144*32bit。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> nKyoku <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    rnd = [<span class="number">0</span>] * <span class="number">144</span> <span class="comment"># rnd将被用于洗牌和投骰子</span></span><br><span class="line">    rnd_bytes = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">    src = [random.getrandbits(<span class="number">32</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">288</span>)] <span class="comment"># 生成288个32bit随机数，赋值给src</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">9</span>): <span class="comment"># 分9次hash</span></span><br><span class="line">        hash_source = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>): <span class="comment"># 每次hash的source的大小为32*4Byte*8bit/Byte = 1024bit</span></span><br><span class="line">            hash_source += src[i*<span class="number">32</span>+j].to_bytes(<span class="number">4</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line">        rnd_bytes += hashlib.sha512(hash_source).digest()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">144</span>):</span><br><span class="line">        rnd[i] = <span class="built_in">int</span>.from_bytes(rnd_bytes[i*<span class="number">4</span>:i*<span class="number">4</span>+<span class="number">4</span>], byteorder=<span class="string">&#x27;little&#x27;</span>) <span class="comment"># 把hash结果转换成int类型</span></span><br></pre></td></tr></table></figure> (f)
+array初始化mtRand。如果想使用C语言，可以直接调用init_by_array函数。如果想使用Python，虽然Python的random的实现刚好是MT算法，但是似乎没有提供init_by_array方法。可能需要自己实现init_by_array。C语言代码略。Python代码请看最后附录。</p>
+<ol start="5" type="a">
+<li>初始化mtRand后，我们就可以按照角田的代码，<strong>对每一小局</strong>，生成288个32bit随机数，共9216bit，再将9216bit以1024bit为单位分9次用SHA-512
+hash到512bit*9 = 4608bit = 144*32bit。</li>
+</ol>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> nKyoku <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    rnd = [<span class="number">0</span>] * <span class="number">144</span> <span class="comment"># rnd将被用于洗牌和投骰子</span></span><br><span class="line">    rnd_bytes = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">    src = [random.getrandbits(<span class="number">32</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">288</span>)] <span class="comment"># 生成288个32bit随机数，赋值给src</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">9</span>): <span class="comment"># 分9次hash</span></span><br><span class="line">        hash_source = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>): <span class="comment"># 每次hash的source的大小为32*4Byte*8bit/Byte = 1024bit</span></span><br><span class="line">            hash_source += src[i*<span class="number">32</span>+j].to_bytes(<span class="number">4</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line">        rnd_bytes += hashlib.sha512(hash_source).digest()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">144</span>):</span><br><span class="line">        rnd[i] = <span class="built_in">int</span>.from_bytes(rnd_bytes[i*<span class="number">4</span>:i*<span class="number">4</span>+<span class="number">4</span>], byteorder=<span class="string">&#x27;little&#x27;</span>) <span class="comment"># 把hash结果转换成int类型</span></span><br></pre></td></tr></table></figure> (f)
 使用rnd数组洗牌，并输出牌山，和官方牌谱阅读器显示的牌山对比是否一致。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以四麻为例。三麻把所有136替换为108</span></span><br><span class="line">yama = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">136</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">136</span> - <span class="number">1</span>):</span><br><span class="line">    temp = yama[i]</span><br><span class="line">    yama[i] = yama[i + (rnd[i]%(<span class="number">136</span>-i))]</span><br><span class="line">    yama[i + (rnd[i]%(<span class="number">136</span>-i))] = temp</span><br></pre></td></tr></table></figure>
-四麻：yama数组的元素的范围是[0,136)。除以4向下取整，0-8为1-9万，9-17为1-9筒，18-26为1-9索，27-34为东南西北白发中。如果一张5m5p5s除以4的余数为0，且规则有赤，则为赤牌。
-三麻：yama数组的元素的范围是[0,108)。除以4向下取整，0为1万，1为9万，2-10为1-9筒，11-19为1-9索，20-26为东南西北白发中。如果一张5p5s除以4的余数为0，且规则有赤，则为赤牌。
-骰子对牌山没有影响，不投也无所谓 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打印牌山。依旧以四麻为例</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;nKyoku=&#x27;</span> + <span class="built_in">str</span>(nKyoku) + <span class="string">&#x27; yama=&#x27;</span>)</span><br><span class="line">haiDisp = [<span class="string">&quot;1m&quot;</span>, <span class="string">&quot;2m&quot;</span>, <span class="string">&quot;3m&quot;</span>, <span class="string">&quot;4m&quot;</span>, <span class="string">&quot;5m&quot;</span>, <span class="string">&quot;6m&quot;</span>, <span class="string">&quot;7m&quot;</span>, <span class="string">&quot;8m&quot;</span>, <span class="string">&quot;9m&quot;</span>, <span class="string">&quot;1p&quot;</span>, <span class="string">&quot;2p&quot;</span>, <span class="string">&quot;3p&quot;</span>, <span class="string">&quot;4p&quot;</span>, <span class="string">&quot;5p&quot;</span>, <span class="string">&quot;6p&quot;</span>, <span class="string">&quot;7p&quot;</span>, <span class="string">&quot;8p&quot;</span>, <span class="string">&quot;9p&quot;</span>, <span class="string">&quot;1s&quot;</span>, <span class="string">&quot;2s&quot;</span>, <span class="string">&quot;3s&quot;</span>, <span class="string">&quot;4s&quot;</span>, <span class="string">&quot;5s&quot;</span>, <span class="string">&quot;6s&quot;</span>, <span class="string">&quot;7s&quot;</span>, <span class="string">&quot;8s&quot;</span>, <span class="string">&quot;9s&quot;</span>, <span class="string">&quot;东&quot;</span>, <span class="string">&quot;南&quot;</span>, <span class="string">&quot;西&quot;</span>, <span class="string">&quot;北&quot;</span>, <span class="string">&quot;白&quot;</span>, <span class="string">&quot;发&quot;</span>, <span class="string">&quot;中&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">136</span>):</span><br><span class="line">    <span class="built_in">print</span>(haiDisp[yama[i] // <span class="number">4</span>], end=<span class="string">&#x27;,&#x27;</span>)</span><br></pre></td></tr></table></figure>
-例：刚刚下载的“トトリ先生19歳”的牌谱运行结果为 <img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc2.png" class="">
-用天凤官方web版牌谱阅读器打开牌谱(<a
+四麻：yama数组的元素的范围是[0,136)。除以4向下取整，0-8为1-9万，9-17为1-9筒，18-26为1-9索，27-34为东南西北白发中。如果一张5m5p5s除以4的余数为0，且规则有赤，则为赤牌。</p>
+<p>三麻：yama数组的元素的范围是[0,108)。除以4向下取整，0为1万，1为9万，2-10为1-9筒，11-19为1-9索，20-26为东南西北白发中。如果一张5p5s除以4的余数为0，且规则有赤，则为赤牌。</p>
+<p>骰子对牌山没有影响，不投也无所谓</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打印牌山。依旧以四麻为例</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;nKyoku=&#x27;</span> + <span class="built_in">str</span>(nKyoku) + <span class="string">&#x27; yama=&#x27;</span>)</span><br><span class="line">haiDisp = [<span class="string">&quot;1m&quot;</span>, <span class="string">&quot;2m&quot;</span>, <span class="string">&quot;3m&quot;</span>, <span class="string">&quot;4m&quot;</span>, <span class="string">&quot;5m&quot;</span>, <span class="string">&quot;6m&quot;</span>, <span class="string">&quot;7m&quot;</span>, <span class="string">&quot;8m&quot;</span>, <span class="string">&quot;9m&quot;</span>, <span class="string">&quot;1p&quot;</span>, <span class="string">&quot;2p&quot;</span>, <span class="string">&quot;3p&quot;</span>, <span class="string">&quot;4p&quot;</span>, <span class="string">&quot;5p&quot;</span>, <span class="string">&quot;6p&quot;</span>, <span class="string">&quot;7p&quot;</span>, <span class="string">&quot;8p&quot;</span>, <span class="string">&quot;9p&quot;</span>, <span class="string">&quot;1s&quot;</span>, <span class="string">&quot;2s&quot;</span>, <span class="string">&quot;3s&quot;</span>, <span class="string">&quot;4s&quot;</span>, <span class="string">&quot;5s&quot;</span>, <span class="string">&quot;6s&quot;</span>, <span class="string">&quot;7s&quot;</span>, <span class="string">&quot;8s&quot;</span>, <span class="string">&quot;9s&quot;</span>, <span class="string">&quot;东&quot;</span>, <span class="string">&quot;南&quot;</span>, <span class="string">&quot;西&quot;</span>, <span class="string">&quot;北&quot;</span>, <span class="string">&quot;白&quot;</span>, <span class="string">&quot;发&quot;</span>, <span class="string">&quot;中&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">136</span>):</span><br><span class="line">    <span class="built_in">print</span>(haiDisp[yama[i] // <span class="number">4</span>], end=<span class="string">&#x27;,&#x27;</span>)</span><br></pre></td></tr></table></figure> 例：刚刚下载的“トトリ先生19歳”的牌谱运行结果为
+<img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc2.png" class=""> 用天凤官方web版牌谱阅读器打开牌谱(<a
 target="_blank" rel="noopener" href="https://tenhou.net/3/?log=2016100120gm-00a9-0000-fca091df"
 class="uri">https://tenhou.net/3/?log=2016100120gm-00a9-0000-fca091df</a>)，东一局牌山为
 <img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc3.png" class=""> 经对比，牌山一致。</p>
@@ -330,14 +333,15 @@ class="uri">https://tenhou.net/3/?log=2016100120gm-00a9-0000-fca091df</a>)，东
 <li>打一把段位。在预约之前，打开<a target="_blank" rel="noopener" href="https://tenhou.net/stat/rand/"
 class="uri">https://tenhou.net/stat/rand/</a>，根据我们要打的规则来点击对应的“表示”。如果我们打算打“三般东喰赤”，就点击红圈圈出来的“表示”。
 <img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc4.png" class=""> 会弹出一个新标签页 <img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc7.png" class="">
-可以看到一堆字符。别关掉它。现在可以打一把段位了。 (b1)
-打完后，复制牌谱链接，回到<a target="_blank" rel="noopener" href="https://tenhou.net/stat/rand/"
+可以看到一堆字符。别关掉它。现在可以打一把段位了。</li>
+</ol>
+<p>(b1) 打完后，复制牌谱链接，回到<a
+target="_blank" rel="noopener" href="https://tenhou.net/stat/rand/"
 class="uri">https://tenhou.net/stat/rand/</a>，把牌谱链接粘贴到下图的框里，点击OK按钮
 <img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc5.png" class=""> 然后我们可以得到一串字符 <img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc6.png" class="">
 回到打段位前“别关掉它”的标签页，发现9d26那一行字符的确存在。这说明在对局前，本场对局的种子及席顺已经确定。
-<img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc8.png" class=""> 检定完成。
-等等，用角田的工具来计算hash，不就是让角田自己给自己当裁判了？角田自己也说：</li>
-</ol>
+<img src="/2021/01/01/%E5%A4%A9%E5%87%A4%E7%89%8C%E5%B1%B1%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E9%AA%8C%E8%AF%81/sc8.png" class=""> 检定完成。</p>
+<p>等等，用角田的工具来计算hash，不就是让角田自己给自己当裁判了？角田自己也说：</p>
 <blockquote>
 <p>※天鳳が提供しているCGI版の検証ツールを使用することは、厳密な検証にはなりません。</p>
 </blockquote>
@@ -345,21 +349,21 @@ class="uri">https://tenhou.net/stat/rand/</a>，把牌谱链接粘贴到下图�
 target="_blank" rel="noopener" href="https://tenhou.net/stat/rand/"
 class="uri">https://tenhou.net/stat/rand/</a>中角田写道 &gt;-
 SHA512のソースは4(座席並べ替え情報) + 624*8(乱数種) = 4996bytes</p>
-<p>但角田并没有说明“座席並べ替え情報”和“乱数種”是如何编码的，这导致了玩家无法自己计算hash。经与角田本人邮件沟通以及自己尝试，我知道了它们的编码方式。我会在接下来的步骤中说明。
-(b2)
+<p>但角田并没有说明“座席並べ替え情報”和“乱数種”是如何编码的，这导致了玩家无法自己计算hash。经与角田本人邮件沟通以及自己尝试，我知道了它们的编码方式。我会在接下来的步骤中说明。</p>
+<p>(b2)
 打完后，下载牌谱（参考1.(a)(b)），获取种子，base64解码，<strong>然后表示成16进制，不含0x，其中abcdef小写</strong>。再encode成bytes类型。至此，“乱数種”已经编码完成了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seed = <span class="built_in">bytes</span>(<span class="built_in">hex</span>(<span class="built_in">int</span>.from_bytes(base64.b64decode(seed_text), byteorder=<span class="string">&#x27;big&#x27;</span>))[<span class="number">2</span>:], encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>接下来我们获取“座席並べ替え情報”。要想获取这个情报，我们必须先知道角田是如何安排座位的。
-角田分配座位的方法：根据四个玩家的名字的<strong>字典序升序</strong>，将玩家分别编号为0、1、2、3。角田事先确定这场比赛的座位安排为“xyzw”，其中x、y、z、w均为0到3的整数且不重复。意思是：玩家x东起，玩家y南起，玩家z西起，玩家w北起。
-在打完段位后，我们可以从四个玩家的名字和他们实际的东南西北起，来逆推出这个“xyzw”。接下来我们来说明如何逆推出“xyzw”的值。
-在牌谱中获取三个玩家的名字（四麻为四个玩家）。玩家名字在牌谱文件的UN
-tag里。<code>n0</code>是东起玩家名，<code>n1</code>是南起玩家名，以此类推。例如我刚打的三般东喰赤的牌谱：
-<code>&lt;UN n0="%E3%81%A1%E3%82%83%E3%81%84%E3%81%BE%E3%81%99%E3%82%93%E3%81%93" n1="%E3%82%A2%E3%82%B0%E3%83%A2%E3%83%B3" n2="%4E%6F%4E%61%6D%65" n3="" dan="7,2,0,0" rate="1401.66,1569.12,1500.00,1500.00" sx="M,M,M,C"/&gt;</code>
-对玩家名进行url unquote，我们得到真正的名字：
-<code>n0='ちゃいますんこ', n1='アグモン', n2='NoName'</code>
-将名字进行字典序升序排序，得到
-<code>['NoName', 'ちゃいますんこ', 'アグモン']</code>
-根据角田分配座位的方法，NoName为玩家0，ちゃいますんこ为玩家1，アグモン为玩家2，三麻没有玩家3。这场比赛实际上玩家1东起，玩家2南起，玩家0西起，一个不存在的玩家3北起。于是我们可以推出“xyzw”=“1203”。我们想要知道的“座席並べ替え情報”就等于<code>b'1203'</code>。</p>
+<p>接下来我们获取“座席並べ替え情報”。要想获取这个情报，我们必须先知道角田是如何安排座位的。</p>
+<p>角田分配座位的方法：根据四个玩家的名字的<strong>字典序升序</strong>，将玩家分别编号为0、1、2、3。角田事先确定这场比赛的座位安排为“xyzw”，其中x、y、z、w均为0到3的整数且不重复。意思是：玩家x东起，玩家y南起，玩家z西起，玩家w北起。</p>
+<p>在打完段位后，我们可以从四个玩家的名字和他们实际的东南西北起，来逆推出这个“xyzw”。接下来我们来说明如何逆推出“xyzw”的值。</p>
+<p>在牌谱中获取三个玩家的名字（四麻为四个玩家）。玩家名字在牌谱文件的UN
+tag里。<code>n0</code>是东起玩家名，<code>n1</code>是南起玩家名，以此类推。例如我刚打的三般东喰赤的牌谱：</p>
+<p><code>&lt;UN n0="%E3%81%A1%E3%82%83%E3%81%84%E3%81%BE%E3%81%99%E3%82%93%E3%81%93" n1="%E3%82%A2%E3%82%B0%E3%83%A2%E3%83%B3" n2="%4E%6F%4E%61%6D%65" n3="" dan="7,2,0,0" rate="1401.66,1569.12,1500.00,1500.00" sx="M,M,M,C"/&gt;</code></p>
+<p>对玩家名进行url unquote，我们得到真正的名字：</p>
+<p><code>n0='ちゃいますんこ', n1='アグモン', n2='NoName'</code></p>
+<p>将名字进行字典序升序排序，得到</p>
+<p><code>['NoName', 'ちゃいますんこ', 'アグモン']</code></p>
+<p>根据角田分配座位的方法，NoName为玩家0，ちゃいますんこ为玩家1，アグモン为玩家2，三麻没有玩家3。这场比赛实际上玩家1东起，玩家2南起，玩家0西起，一个不存在的玩家3北起。于是我们可以推出“xyzw”=“1203”。我们想要知道的“座席並べ替え情報”就等于<code>b'1203'</code>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seats = <span class="string">b&#x27;1203&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>知道了“座席並べ替え情報”和“乱数種”，我们就可以计算hash了。直接把它们拼接起来再hash即可：
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source = seat + seed</span><br><span class="line"><span class="built_in">print</span>(hashlib.sha512(source).hexdigest())</span><br></pre></td></tr></table></figure> 运行结果为 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9d268e0153446c7c238e12a110563b8decb95695d0dfe60dd3110e2323f9ce3ef5cf22cd1390564dbb7301572d554525fa772a2ca45f56e7167cb4c2d0139a00</span><br></pre></td></tr></table></figure>
@@ -372,13 +376,16 @@ tag里。<code>n0</code>是东起玩家名，<code>n1</code>是南起玩家名�
 </ol>
 <p>也有以下不足之处：</p>
 <ol type="1">
-<li><p>玩家无法检验角田有没有故意选择牌山。虽然由于牌山生成算法是固定的且中间有hash步骤，角田不能为所欲为地生成奇葩牌山，但是角田可以在比赛前对mtLocal的种子进行选择。一个mtLocal的种子对应了一场比赛的所有小局的牌山，角田可以先看看这个种子生成的牌山是啥样的，然后决定用不用这个种子。席顺也是。
-&gt;牌山の生成方法を完全公開にする予定です。 &gt;
-&gt;公開する情報は「配山の生成手法」と「乱数シード」になります。 &gt;
-&gt;これによって &gt;１．作為的に配牌を選択していない
-&gt;２．特定の局面で山を操作していない
-&gt;ことが牌譜と対戦ログから検証可能になります。
-&gt;※現状でも２．は検証可能です。</p>
+<li><p>玩家无法检验角田有没有故意选择牌山。虽然由于牌山生成算法是固定的且中间有hash步骤，角田不能为所欲为地生成奇葩牌山，但是角田可以在比赛前对mtLocal的种子进行选择。一个mtLocal的种子对应了一场比赛的所有小局的牌山，角田可以先看看这个种子生成的牌山是啥样的，然后决定用不用这个种子。席顺也是。</p>
+<blockquote>
+<p>牌山の生成方法を完全公開にする予定です。</p>
+<p>公開する情報は「配山の生成手法」と「乱数シード」になります。</p>
+<p>これによって</p>
+<p>１．作為的に配牌を選択していない</p>
+<p>２．特定の局面で山を操作していない</p>
+<p>ことが牌譜と対戦ログから検証可能になります。</p>
+<p>※現状でも２．は検証可能です。</p>
+</blockquote>
 <p>角田的博客中提到了“※現状でも２．は検証可能です”，也就是说“１．没有故意选择配牌”这点玩家无法验证。但是，即使角田故意选择了牌山，也很难给某个特定的玩家（比如氪金玩家）好牌、某个特定的玩家烂牌，因为mtLocal的种子、席顺是在对局前，甚至可能在玩家预约前、登录前就确定的。</p></li>
 </ol>
 <h2 id="结论以及和雀魂的对比">结论以及和雀魂的对比</h2>
@@ -460,7 +467,7 @@ target="_blank" rel="noopener" href="http://www.math.sci.hiroshima-u.ac.jp/m-mat
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
