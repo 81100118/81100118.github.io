@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"81100118.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="声明：我数学学得不好，概念、解释等可能有误 本文讨论的pt分布为天凤凤凰桌半庄战。 用“1位数量:2位数量:3位数量”来表示真实实力的顺位分布，“1位数量+2位数量+3位数量”表示实际对局结果。 安定段位和顺位分布的关系 三麻：20:19:18为安8，19:19:19（即1:1:1）为安7。安8的一位率比三位率高不少，但是和安7比，其实只是57个半庄里相差2个顺位而已。一个安8实力的人，如果每28">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于安定段位的碎碎念">
+<meta property="og:url" content="https://81100118.github.io/2024/04/04/stable-dan/index.html">
+<meta property="og:site_name" content="81100118的博客">
+<meta property="og:description" content="声明：我数学学得不好，概念、解释等可能有误 本文讨论的pt分布为天凤凤凰桌半庄战。 用“1位数量:2位数量:3位数量”来表示真实实力的顺位分布，“1位数量+2位数量+3位数量”表示实际对局结果。 安定段位和顺位分布的关系 三麻：20:19:18为安8，19:19:19（即1:1:1）为安7。安8的一位率比三位率高不少，但是和安7比，其实只是57个半庄里相差2个顺位而已。一个安8实力的人，如果每28">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-04T01:53:29.000Z">
+<meta property="article:modified_time" content="2024-04-04T13:23:02.170Z">
+<meta property="article:author" content="81100118">
+<meta property="article:tag" content="日麻">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://81100118.github.io/2024/04/04/stable-dan/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://81100118.github.io/2024/04/04/stable-dan/","path":"2024/04/04/stable-dan/","title":"关于安定段位的碎碎念"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>关于安定段位的碎碎念 | 81100118的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">81100118的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%AE%9A%E6%AE%B5%E4%BD%8D%E5%92%8C%E9%A1%BA%E4%BD%8D%E5%88%86%E5%B8%83%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">安定段位和顺位分布的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%AE%9A%E6%AE%B5%E4%BD%8D%E6%9C%89%E5%A4%9A%E5%AE%89%E5%AE%9A"><span class="nav-number">2.</span> <span class="nav-text">安定段位有多安定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A2%E5%BE%80%E5%AF%B9%E5%B1%80%E5%AF%B9%E4%BB%A5%E5%90%8E%E5%AE%89%E5%AE%9A%E6%AE%B5%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">2.1.</span> <span class="nav-text">既往对局对以后安定段的影响</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5%E5%8D%87%E9%99%8D%E6%AE%B5%E4%B8%BA%E8%8A%82%E7%82%B9%E5%AE%89%E5%AE%9A%E6%AE%B5%E4%BD%8D%E4%BC%9A%E6%80%8E%E4%B9%88%E6%A0%B7"><span class="nav-number">3.</span> <span class="nav-text">以升降段为节点，安定段位会怎么样</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">81100118</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2024/04/04/stable-dan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="81100118">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="关于安定段位的碎碎念 | 81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于安定段位的碎碎念
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-04-04 09:53:29 / 修改时间：21:23:02" itemprop="dateCreated datePublished" datetime="2024-04-04T09:53:29+08:00">2024-04-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>声明：我数学学得不好，概念、解释等可能有误</strong></p>
+<p>本文讨论的pt分布为天凤凤凰桌半庄战。</p>
+<p>用“1位数量:2位数量:3位数量”来表示真实实力的顺位分布，“1位数量+2位数量+3位数量”表示实际对局结果。</p>
+<h1 id="安定段位和顺位分布的关系">安定段位和顺位分布的关系</h1>
+<p><strong>三麻：</strong>20:19:18为安8，19:19:19（即1:1:1）为安7。安8的一位率比三位率高不少，但是和安7比，<strong>其实只是57个半庄里相差2个顺位而已</strong>。一个安8实力的人，如果每28.5个半庄（按每半庄14分算，约6.6小时）因为体系外原因掉一个顺位，就会变成安7实力的人。</p>
+<p><strong>四麻：</strong>17:16:16:15为安8，16:16:16:16（即1:1:1:1）为安7。64个半庄里相差3个顺位，相当于每21.33个半庄里相差1个顺位。一个安8实力的人，如果每21.33个半庄（按每半庄27分钟来算，约9.6小时）因为体系外原因掉一个顺位，就会变成安7实力的人。当然，由于四麻吃4后果比较严重，主要要看多吃的4的数量，不能仅仅看掉的顺位的个数。这里仅以这个顺位分布举例了。</p>
+<p><strong>我的想法：</strong>因为偶尔掉顺位对安定段位影响也很大，所以要尽量避免因为体系外原因的损失，例如状态不好、精神不能集中导致的体系外失误，以及掉线。当然这些因素也不是每次都会导致掉顺位，有时甚至能升顺位，例如鸡打狗和、摸切不点等。安8和安7实际顺位分布相差并没有那么大，但安8和安7是巨大的实力差距。</p>
+<h1 id="安定段位有多安定">安定段位有多安定</h1>
+<p><strong>三麻：</strong></p>
+<p>如果一个人真实实力为1:1:1的顺位分布，安7，每次对局均独立，则ta打一定数量的对局，安定段的范围如下表：</p>
+<span id="more"></span>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>对局数</th>
+<th>1%</th>
+<th>2.5%</th>
+<th>5%</th>
+<th>10%</th>
+<th>50%</th>
+<th>90%</th>
+<th>95%</th>
+<th>97.5%</th>
+<th>99%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>500半庄</td>
+<td>4.980</td>
+<td>5.253</td>
+<td>5.501</td>
+<td>5.817</td>
+<td>7.000</td>
+<td>8.367</td>
+<td>8.776</td>
+<td>9.158</td>
+<td>9.615</td>
+</tr>
+<tr class="even">
+<td>1000半庄</td>
+<td>5.525</td>
+<td>5.732</td>
+<td>5.926</td>
+<td>6.151</td>
+<td>7.000</td>
+<td>7.937</td>
+<td>8.227</td>
+<td>8.475</td>
+<td>8.770</td>
+</tr>
+<tr class="odd">
+<td>3000半庄</td>
+<td>6.113</td>
+<td>6.244</td>
+<td>6.363</td>
+<td>6.497</td>
+<td>7.000</td>
+<td>7.533</td>
+<td>7.684</td>
+<td>7.823</td>
+<td>7.993</td>
+</tr>
+<tr class="even">
+<td>5000半庄</td>
+<td>6.304</td>
+<td>6.409</td>
+<td>6.503</td>
+<td>6.610</td>
+<td>7.000</td>
+<td>7.409</td>
+<td>7.527</td>
+<td>7.631</td>
+<td>7.756</td>
+</tr>
+<tr class="odd">
+<td>10000半庄</td>
+<td>6.502</td>
+<td>6.580</td>
+<td>6.646</td>
+<td>6.723</td>
+<td>7.000</td>
+<td>7.288</td>
+<td>7.371</td>
+<td>7.445</td>
+<td>7.528</td>
+</tr>
+</tbody>
+</table>
+<p>（每行数据均为模拟100000次结果，下同）</p>
+<p>数据解读方法也许是：以1000半庄行、2.5%列和97.5%列的数据为例，一个三麻真实实力为1:1:1、安7的人，在三凤打1000半庄，安定段位有97.5%的概率不高于8.475，有2.5%的概率不高于5.732。这个5.732到8.475的区间有点像95%置信区间，但和置信区间的概念似乎是不一样的，置信区间是以样本估计真实值时使用的，而这个表格里的数据是已知真实值求样本参数。</p>
+<p>如果一个人真实实力为20:19:18的顺位分布，安8，每次对局均独立，则ta打一定数量的对局，安定段的范围如下表：</p>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>对局数</th>
+<th>1%</th>
+<th>2.5%</th>
+<th>5%</th>
+<th>10%</th>
+<th>50%</th>
+<th>90%</th>
+<th>95%</th>
+<th>97.5%</th>
+<th>99%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>500半庄</td>
+<td>5.753</td>
+<td>6.069</td>
+<td>6.350</td>
+<td>6.684</td>
+<td>8.000</td>
+<td>9.527</td>
+<td>9.980</td>
+<td>10.423</td>
+<td>10.946</td>
+</tr>
+<tr class="even">
+<td>1000半庄</td>
+<td>6.348</td>
+<td>6.587</td>
+<td>6.807</td>
+<td>7.054</td>
+<td>7.994</td>
+<td>9.044</td>
+<td>9.356</td>
+<td>9.647</td>
+<td>9.980</td>
+</tr>
+<tr class="odd">
+<td>3000半庄</td>
+<td>7.009</td>
+<td>7.162</td>
+<td>7.290</td>
+<td>7.442</td>
+<td>8.000</td>
+<td>8.591</td>
+<td>8.764</td>
+<td>8.914</td>
+<td>9.096</td>
+</tr>
+<tr class="even">
+<td>5000半庄</td>
+<td>7.221</td>
+<td>7.344</td>
+<td>7.447</td>
+<td>7.565</td>
+<td>8.001</td>
+<td>8.456</td>
+<td>8.588</td>
+<td>8.708</td>
+<td>8.847</td>
+</tr>
+<tr class="odd">
+<td>10000半庄</td>
+<td>7.451</td>
+<td>7.536</td>
+<td>7.609</td>
+<td>7.695</td>
+<td>8.002</td>
+<td>8.321</td>
+<td>8.411</td>
+<td>8.492</td>
+<td>8.588</td>
+</tr>
+</tbody>
+</table>
+<p><strong>四麻：</strong></p>
+<p>如果一个人真实实力为1:1:1:1的顺位分布，安7，每次对局均独立，则ta打一定数量的对局，安定段的范围如下表：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>对局数</th>
+<th>1%</th>
+<th>2.5%</th>
+<th>5%</th>
+<th>10%</th>
+<th>50%</th>
+<th>90%</th>
+<th>95%</th>
+<th>97.5%</th>
+<th>99%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>500半庄</td>
+<td>4.980</td>
+<td>5.273</td>
+<td>5.523</td>
+<td>5.826</td>
+<td>7.000</td>
+<td>8.425</td>
+<td>8.879</td>
+<td>9.279</td>
+<td>9.780</td>
+</tr>
+<tr class="even">
+<td>1000半庄</td>
+<td>5.511</td>
+<td>5.723</td>
+<td>5.913</td>
+<td>6.138</td>
+<td>7.000</td>
+<td>7.966</td>
+<td>8.262</td>
+<td>8.520</td>
+<td>8.851</td>
+</tr>
+<tr class="odd">
+<td>3000半庄</td>
+<td>6.105</td>
+<td>6.240</td>
+<td>6.357</td>
+<td>6.496</td>
+<td>7.000</td>
+<td>7.544</td>
+<td>7.703</td>
+<td>7.846</td>
+<td>8.011</td>
+</tr>
+<tr class="even">
+<td>5000半庄</td>
+<td>6.297</td>
+<td>6.406</td>
+<td>6.498</td>
+<td>6.605</td>
+<td>7.000</td>
+<td>7.418</td>
+<td>7.541</td>
+<td>7.648</td>
+<td>7.774</td>
+</tr>
+<tr class="odd">
+<td>10000半庄</td>
+<td>6.491</td>
+<td>6.572</td>
+<td>6.638</td>
+<td>6.717</td>
+<td>7.000</td>
+<td>7.293</td>
+<td>7.379</td>
+<td>7.455</td>
+<td>7.549</td>
+</tr>
+</tbody>
+</table>
+<p><strong>我的想法：</strong>很可能已经有不止一个人做过类似的表格了。数千半庄的安定段位波动范围也不小。我更想说的是：表格里，真实实力三凤安8、3000战，2.5th
+percentile是安7.162，97.5th
+percentile是安8.914，这意味着平均每40个三凤真实实力安8且打了3000战的人，就会出现一个3000战至多安7.162的人，和一个3000战至少安8.914的人。另外，根据大石的数据（B站专栏《网络麻将实力的评价方法》），四凤南安7在3000战内到达过十段的概率为0.0229，也就是说，平均每44个真实实力安7且打了3000战的人中，就有一个升到过十段。因此，高安定段位/高段位者中，部分可能只是众多实力普通的人里波出来的。</p>
+<p>最近有日本人做了个真·安定段位计算器（仅限四麻），大概是以凤桌人群的安定段位分布作为先验，用贝叶斯来估计一个人的真实水平（我统计没学好，很可能说得有问题，因此我也不评价该方法的优缺点）。注意最后的以文字进行的实力评价（豆凤、凤凰的猛者等）的评价标准带有作者的主观性。<a
+target="_blank" rel="noopener" href="https://ichijojisagarimatsu.hatenablog.com/entry/tenho_antei_bayes"
+class="uri">https://ichijojisagarimatsu.hatenablog.com/entry/tenho_antei_bayes</a></p>
+<p>同样是真实实力安7（获得每个顺位的概率相等）、对战数相同的情况下，三麻和四麻相比，四麻的安定段位波动范围大多略大一点。这可能是末位惩罚规则导致的，人数越多，相同对局数安定段位波动范围就越大。考虑一种千人麻将，只有第1000名扣pt，那么1000次对局下来，有不小的概率（约0.368）没有获得过1000名，此时安定段位是正无穷（忽略1000次对局全是第999名的情况）。当然，绝对的段位pt变化肯定是三麻更大。</p>
+<h2 id="既往对局对以后安定段的影响">既往对局对以后安定段的影响</h2>
+<p>如果一真实实力为1:1:1的顺位分布的人，在三凤刚开始时就遇到了平平无奇一小波恶调，1+3+5，这对以后的安定段位有多大影响呢？</p>
+<p>假设那个人以后ta打了300半庄，运气正常，100+100+100。</p>
+<p>那么总数为101+103+105，安6.657</p>
+<p>相反如果ta上来就遇到了平平无奇一小波好调，5+3+1，那么总数为105+103+101，安7.356。</p>
+<p>如果改为以后打了330+330+330半庄，则安定段位分别为6.893、7.109。</p>
+<p><strong>我的想法：</strong>对局数不多时，一点点的好调恶调就会对安定段有较大影响。</p>
+<h1
+id="以升降段为节点安定段位会怎么样">以升降段为节点，安定段位会怎么样</h1>
+<p>水表网上“预计在x半庄战后升段/降段”是根据既往对局的1234位分布，估计未来对局的pt期望，然后将升段/降段所需pt除以pt期望算出来的。例如pt期望为2，离升段还差1400pt，那么就会显示“预计在700半庄战后升段”。但是由于波动，实际对战数期望是小于这个数的。另外，pt期望为正，也并非一定升段，也可能降段；pt期望为0，并不是永远不会升段降段了。</p>
+<p><strong>三麻：</strong>考虑真实实力为1:1:1的人，从七段原点开始打，直到升段或者降段。模拟一百万次。</p>
+<p>筛选结果为升段的情况，平均对局数为182，对局数中位数为137，安定段中位数为9.475。</p>
+<p>筛选结果为降段的情况，平均对局数为181，对局数中位数为138，安定段中位数为5.059。</p>
+<p><strong>四麻：</strong>考虑真实实力为1:1:1:1的人，从七段原点开始打，直到升段或者降段。模拟一百万次。</p>
+<p>筛选结果为升段的情况，平均对局数为305，对局数中位数为232，安定段中位数为8.904。</p>
+<p>筛选结果为降段的情况，平均对局数为300，对局数中位数为227，安定段中位数为5.453。</p>
+<p><strong>我的想法：</strong>原来安定段会偏离7段那么多啊。所以刚升凤时七段升八安定段很高也不要自负，七段降六安定段很低也不要气馁，可能只是波。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%97%A5%E9%BA%BB/" rel="tag"># 日麻</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/28/deliberate-downgrade/" rel="prev" title="Pt很低即将掉段时，应该故意掉段吗">
+                  <i class="fa fa-chevron-left"></i> Pt很低即将掉段时，应该故意掉段吗
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">81100118</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
