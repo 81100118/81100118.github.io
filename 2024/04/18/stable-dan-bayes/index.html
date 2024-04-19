@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"81100118.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近阅读了[1]鳳凰卓東南戦の真の安定段位をベイズ推定以及这篇文章引用的[2]【麻雀】安定段位をベイズ推定する，将这两篇文章里的方法推广至三麻。本文大部分是这两篇文章的概括。 声明：我数学学得不好，概念、解释等可能有误 原理 简单来说：  假设每次对局独立，令一名玩家的顺位率（真实水平吃1、2、3的概率）\({\boldsymbol{\theta} &#x3D; (\theta_1, \theta_2, \">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三凤南安定段位的贝叶斯估计">
+<meta property="og:url" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/index.html">
+<meta property="og:site_name" content="81100118的博客">
+<meta property="og:description" content="最近阅读了[1]鳳凰卓東南戦の真の安定段位をベイズ推定以及这篇文章引用的[2]【麻雀】安定段位をベイズ推定する，将这两篇文章里的方法推广至三麻。本文大部分是这两篇文章的概括。 声明：我数学学得不好，概念、解释等可能有误 原理 简单来说：  假设每次对局独立，令一名玩家的顺位率（真实水平吃1、2、3的概率）\({\boldsymbol{\theta} &#x3D; (\theta_1, \theta_2, \">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/4ma1201-1700.png">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/4ma_alpha200_1434hanchan.png">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/4ma_alpha400_1434hanchan.png">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/4ma2101-2900.png">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/4ma_alpha200_2457hanchan.png">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/4ma_alpha400_2457hanchan.png">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/3ma601-900.png">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/3ma_alpha300_739hanchan.png">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/3ma1001-2000.png">
+<meta property="og:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/3ma_alpha300_1393hanchan.png">
+<meta property="article:published_time" content="2024-04-18T13:09:03.000Z">
+<meta property="article:modified_time" content="2024-04-19T13:04:05.067Z">
+<meta property="article:author" content="81100118">
+<meta property="article:tag" content="日麻">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://81100118.github.io/2024/04/18/stable-dan-bayes/4ma1201-1700.png">
+
+
+<link rel="canonical" href="https://81100118.github.io/2024/04/18/stable-dan-bayes/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://81100118.github.io/2024/04/18/stable-dan-bayes/","path":"2024/04/18/stable-dan-bayes/","title":"三凤南安定段位的贝叶斯估计"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>三凤南安定段位的贝叶斯估计 | 81100118的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">81100118的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%87%A4%E5%8D%97%E5%8F%8A%E4%B8%89%E5%87%A4%E5%8D%97boldsymbolalpha%E7%9A%84%E5%8F%96%E5%80%BC"><span class="nav-number">1.1.</span> <span class="nav-text">四凤南及三凤南\(\boldsymbol{\alpha}\)的取值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E5%87%A4%E5%8D%97"><span class="nav-number">1.1.1.</span> <span class="nav-text">四凤南</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%88%98%E6%95%B0%E4%B8%AD%E7%AD%89%E7%BB%84"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">对战数中等组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%88%98%E6%95%B0%E8%BE%83%E5%A4%9A%E7%BB%84"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">对战数较多组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%87%A4%E5%8D%97"><span class="nav-number">1.1.2.</span> <span class="nav-text">三凤南</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%88%98%E6%95%B0%E8%BE%83%E5%B0%91%E7%BB%84"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">对战数较少组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%88%98%E6%95%B0%E4%B8%AD%E7%AD%89%E7%BB%84-1"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">对战数中等组</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%B0%E8%AE%A1%E5%AE%89%E5%AE%9A%E6%AE%B5%E4%BD%8D%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯估计安定段位的例子</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">81100118</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://81100118.github.io/2024/04/18/stable-dan-bayes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="81100118">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="三凤南安定段位的贝叶斯估计 | 81100118的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          三凤南安定段位的贝叶斯估计
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-18 21:09:03" itemprop="dateCreated datePublished" datetime="2024-04-18T21:09:03+08:00">2024-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-19 21:04:05" itemprop="dateModified" datetime="2024-04-19T21:04:05+08:00">2024-04-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>最近阅读了[1]<a
+target="_blank" rel="noopener" href="https://ichijojisagarimatsu.hatenablog.com/entry/tenho_antei_bayes">鳳凰卓東南戦の真の安定段位をベイズ推定</a>以及这篇文章引用的[2]<a
+target="_blank" rel="noopener" href="https://note.com/ippou1000/n/nf744d288bfa6">【麻雀】安定段位をベイズ推定する</a>，<strong>将这两篇文章里的方法推广至三麻</strong>。本文大部分是这两篇文章的概括。</p>
+<p><strong>声明：我数学学得不好，概念、解释等可能有误</strong></p>
+<h1 id="原理">原理</h1>
+<p>简单来说：</p>
+<ol type="1">
+<li>假设每次对局独立，令一名玩家的顺位率（真实水平吃1、2、3的概率）<span
+class="math inline">\({\boldsymbol{\theta} = (\theta_1, \theta_2,
+\theta_3)}\)</span> <span id="more"></span></li>
+<li>假设<span
+class="math inline">\(\boldsymbol{\theta}\)</span>的先验分布为狄利克雷分布<span
+class="math inline">\(\mathrm{dirichlet}(\boldsymbol{\theta}\mid\boldsymbol{\alpha})\)</span>，其中<span
+class="math inline">\(\boldsymbol{\alpha} = (\alpha_1, \alpha_2,
+\alpha_3)\)</span>为分布的参数。这个分布是我们对凤桌玩家的水平的信念。假设吃每个顺位的概率期望值是相等的，则<span
+class="math inline">\(\alpha_1 = \alpha_2 =
+\alpha_3\)</span>，<strong><span
+class="math inline">\(\boldsymbol{\alpha}\)</span>越大，对先验的信念就越强，即吃每个顺位的概率都更集中于1/3左右，通俗而不准确地说，就是更相信大家水平更集中于2.0平顺，更加不相信存在超高和超低水平的人。</strong></li>
+<li>令该玩家实际对局结果吃1、2、3的次数为<span
+class="math inline">\(\boldsymbol{N} = (N_1, N_2, N_3)\)</span>。<span
+class="math inline">\(\boldsymbol{\theta}\)</span>的后验分布，即根据对战结果将先验分布更新后的分布，也是一个狄利克雷分布：<span
+class="math inline">\(\mathrm{dirichlet}(\boldsymbol{\theta}\mid\boldsymbol{\alpha}
++ \boldsymbol{N})\)</span>。设定一个<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>，例如等于<span
+class="math inline">\((200, 200,
+200)\)</span>，即可计算出该玩家的顺位率的后验分布</li>
+<li>根据该玩家（真实水平的）顺位率的后验分布，进行很多次（例如一百万次）蒙特卡洛模拟，根据每次抽样出的顺位率，计算对应的安定段位。获得这一百万个安定段位后，我们可以求出中位数、95%置信区间等数据。</li>
+</ol>
+<h2 id="四凤南及三凤南boldsymbolalpha的取值">四凤南及三凤南<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>的取值</h2>
+<p>在四凤南，[2]的作者设定为200，[1]的作者沿用其值。我们用以下方法确定<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>的取值（这是我自己的方法，并非引用的文章里的，不知道是否科学）：</p>
+<ol type="1">
+<li><p>获取凤南对局数在某个范围内的所有玩家的对局结果顺位率及安定段位，计算出标准差、百分位数，并画出直方图</p></li>
+<li><p>令<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>等于某个值，对（真实水平）顺位率的先验分布进行蒙特卡洛模拟；对每次抽样出的（真实水平）顺位率，模拟一定数量的对局，计算出（对局结果的）顺位率以及安定段位，计算出这些数据的标准差、百分位数，并画出直方图</p></li>
+<li><p>比较1和2中的数据和图，不断修改<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>使两者接近。</p></li>
+</ol>
+<p>接下来使用以上方法分别确定四凤南和三凤南<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>的取值。</p>
+<h3 id="四凤南">四凤南</h3>
+<h4 id="对战数中等组">对战数中等组</h4>
+<p>根据<a
+target="_blank" rel="noopener" href="http://otokomyouri.com/toppage.aspx">男冥利</a>的数据，截至2024年4月，四凤南对战数<strong>1201-1700半庄共719个账号</strong>的（对局结果的）各顺位率及安定段位分布如下图：</p>
+<img src="/2024/04/18/stable-dan-bayes/4ma1201-1700.png" class="" width="400" title="四凤南1201-1700半庄共719个账号的（对局结果的）各顺位率及安定段位分布">
+<p><span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取200时，模拟100000个玩家，每个玩家对局1434半庄（四凤南1201-1700半庄所有账号的对局数平均值），（对局结果的）各顺位率及安定段位分布如下图：</p>
+<img src="/2024/04/18/stable-dan-bayes/4ma_alpha200_1434hanchan.png" class="" width="400" title="alpha&#x3D;200时模拟出（对局结果的）各顺位率及安定段位分布">
+<p><span class="math inline">\(\boldsymbol{\alpha}\)</span>取400时：
+<img src="/2024/04/18/stable-dan-bayes/4ma_alpha400_1434hanchan.png" class="" width="400" title="alpha&#x3D;400时模拟出（对局结果的）各顺位率及安定段位分布"></p>
+<p>标准差、百分位数等数据：</p>
+<table>
+<thead>
+<tr class="header">
+<th>对局结果顺位率</th>
+<th>10%</th>
+<th>中位数</th>
+<th>90%</th>
+<th>标准差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>凤桌1位率</td>
+<td>0.231</td>
+<td>0.250</td>
+<td>0.269</td>
+<td>0.0153</td>
+</tr>
+<tr class="even">
+<td>凤桌2位率</td>
+<td>0.232</td>
+<td>0.251</td>
+<td>0.268</td>
+<td>0.0136</td>
+</tr>
+<tr class="odd">
+<td>凤桌3位率</td>
+<td>0.231</td>
+<td>0.251</td>
+<td>0.269</td>
+<td>0.0154</td>
+</tr>
+<tr class="even">
+<td>凤桌4位率</td>
+<td>0.229</td>
+<td>0.249</td>
+<td>0.268</td>
+<td>0.0154</td>
+</tr>
+<tr class="odd">
+<td>alpha=200各顺位率</td>
+<td>0.226</td>
+<td>0.250</td>
+<td>0.275</td>
+<td>0.0190</td>
+</tr>
+<tr class="even">
+<td>alpha=400各顺位率</td>
+<td>0.230</td>
+<td>0.250</td>
+<td>0.270</td>
+<td>0.0157</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>对局结果安定段位</th>
+<th>10%</th>
+<th>中位数</th>
+<th>90%</th>
+<th>标准差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>凤桌</td>
+<td>6.21</td>
+<td>7.05</td>
+<td>8.09</td>
+<td>0.746</td>
+</tr>
+<tr class="even">
+<td>alpha=200</td>
+<td>5.68</td>
+<td>7.00</td>
+<td>8.57</td>
+<td>1.139</td>
+</tr>
+<tr class="odd">
+<td>alpha=400</td>
+<td>5.89</td>
+<td>7.00</td>
+<td>8.26</td>
+<td>0.931</td>
+</tr>
+</tbody>
+</table>
+<h4 id="对战数较多组">对战数较多组</h4>
+<p>根据<a
+target="_blank" rel="noopener" href="http://otokomyouri.com/toppage.aspx">男冥利</a>的数据，截至2024年4月，四凤南对战数<strong>2101-2900半庄共390个账号</strong>的（对局结果的）各顺位率及安定段位分布如下图：</p>
+<img src="/2024/04/18/stable-dan-bayes/4ma2101-2900.png" class="" width="400" title="四凤南2101-2900半庄共390个账号的（对局结果的）各顺位率及安定段位分布">
+<p><span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取200时，模拟100000个玩家，每个玩家对局2457半庄（四凤南2101-2900半庄所有账号的对局数平均值），（对局结果的）各顺位率及安定段位分布如下图：</p>
+<img src="/2024/04/18/stable-dan-bayes/4ma_alpha200_2457hanchan.png" class="" width="400" title="alpha&#x3D;200时模拟出（对局结果的）各顺位率及安定段位分布">
+<p><span class="math inline">\(\boldsymbol{\alpha}\)</span>取400时：
+<img src="/2024/04/18/stable-dan-bayes/4ma_alpha400_2457hanchan.png" class="" width="400" title="alpha&#x3D;400时模拟出（对局结果的）各顺位率及安定段位分布"></p>
+<p>标准差、百分位数等数据：</p>
+<table>
+<thead>
+<tr class="header">
+<th>对局结果顺位率</th>
+<th>10%</th>
+<th>中位数</th>
+<th>90%</th>
+<th>标准差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>凤桌1位率</td>
+<td>0.237</td>
+<td>0.254</td>
+<td>0.270</td>
+<td>0.0129</td>
+</tr>
+<tr class="even">
+<td>凤桌2位率</td>
+<td>0.238</td>
+<td>0.252</td>
+<td>0.265</td>
+<td>0.0107</td>
+</tr>
+<tr class="odd">
+<td>凤桌3位率</td>
+<td>0.235</td>
+<td>0.250</td>
+<td>0.264</td>
+<td>0.0123</td>
+</tr>
+<tr class="even">
+<td>凤桌4位率</td>
+<td>0.229</td>
+<td>0.245</td>
+<td>0.261</td>
+<td>0.0128</td>
+</tr>
+<tr class="odd">
+<td>alpha=200各顺位率</td>
+<td>0.228</td>
+<td>0.250</td>
+<td>0.273</td>
+<td>0.0176</td>
+</tr>
+<tr class="even">
+<td>alpha=400各顺位率</td>
+<td>0.232</td>
+<td>0.250</td>
+<td>0.268</td>
+<td>0.0139</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>对局结果安定段位</th>
+<th>10%</th>
+<th>中位数</th>
+<th>90%</th>
+<th>标准差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>凤桌</td>
+<td>6.53</td>
+<td>7.28</td>
+<td>8.17</td>
+<td>0.665</td>
+</tr>
+<tr class="even">
+<td>alpha=200</td>
+<td>5.76</td>
+<td>7.00</td>
+<td>8.44</td>
+<td>1.052</td>
+</tr>
+<tr class="odd">
+<td>alpha=400</td>
+<td>6.01</td>
+<td>7.00</td>
+<td>8.11</td>
+<td>0.822</td>
+</tr>
+</tbody>
+</table>
+<h4 id="总结">总结</h4>
+<p>从图像和数据来看，<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取400时比<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取200时更接近于凤桌结果。<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取400时，模拟出的数据范围和标准差还是比凤桌结果更大，但由于根据对战数进行了筛选，玩家的实际水平也会同时被筛选，在2101-2900半庄的数据中尤为明显，安定段中位数位7.28，打得多的人水平较高。因此，虽然<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取400时标准差还是比凤桌高，我也不再增大alpha的值了。</p>
+<h3 id="三凤南">三凤南</h3>
+<p>由于我比较懒，只放凤桌结果和<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取300的数据了</p>
+<h4 id="对战数较少组">对战数较少组</h4>
+<p>根据<a
+target="_blank" rel="noopener" href="http://otokomyouri.com/toppage.aspx">男冥利</a>的数据，截至2024年4月，三凤南<strong>601-900半庄共350个账号</strong>的（对局结果的）各顺位率及安定段位分布如下图：</p>
+<img src="/2024/04/18/stable-dan-bayes/3ma601-900.png" class="" width="400" title="三凤南601-900半庄共350个账号的（对局结果的）各顺位率及安定段位分布">
+<p><span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取300时，模拟100000个玩家，每个玩家对局739半庄（三凤南601-900半庄所有账号的对局数平均值），（对局结果的）各顺位率及安定段位分布如下图：</p>
+<img src="/2024/04/18/stable-dan-bayes/3ma_alpha300_739hanchan.png" class="" width="400" title="alpha&#x3D;300时模拟出（对局结果的）各顺位率及安定段位分布">
+<p>标准差、百分位数等数据：</p>
+<table>
+<thead>
+<tr class="header">
+<th>对局结果顺位率</th>
+<th>10%</th>
+<th>中位数</th>
+<th>90%</th>
+<th>标准差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>凤桌1位率</td>
+<td>0.307</td>
+<td>0.331</td>
+<td>0.354</td>
+<td>0.0189</td>
+</tr>
+<tr class="even">
+<td>凤桌2位率</td>
+<td>0.302</td>
+<td>0.332</td>
+<td>0.359</td>
+<td>0.0231</td>
+</tr>
+<tr class="odd">
+<td>凤桌3位率</td>
+<td>0.311</td>
+<td>0.336</td>
+<td>0.367</td>
+<td>0.0225</td>
+</tr>
+<tr class="even">
+<td>alpha=300各顺位率</td>
+<td>0.303</td>
+<td>0.333</td>
+<td>0.364</td>
+<td>0.0235</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>对局结果安定段位</th>
+<th>10%</th>
+<th>中位数</th>
+<th>90%</th>
+<th>标准差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>凤桌</td>
+<td>5.70</td>
+<td>6.78</td>
+<td>7.99</td>
+<td>0.927</td>
+</tr>
+<tr class="even">
+<td>alpha=300</td>
+<td>5.69</td>
+<td>7.00</td>
+<td>8.53</td>
+<td>1.115</td>
+</tr>
+</tbody>
+</table>
+<h4 id="对战数中等组-1">对战数中等组</h4>
+<p>根据<a
+target="_blank" rel="noopener" href="http://otokomyouri.com/toppage.aspx">男冥利</a>的数据，截至2024年4月，三凤南<strong>1001-2000半庄共354个账号</strong>的（对局结果的）各顺位率及安定段位分布如下图：</p>
+<img src="/2024/04/18/stable-dan-bayes/3ma1001-2000.png" class="" width="400" title="三凤南1001-2000半庄共354个账号的（对局结果的）各顺位率及安定段位分布">
+<p><span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取300时，模拟100000个玩家，每个玩家对局1393半庄（三凤南1001-2000半庄所有账号的对局数平均值），（对局结果的）各顺位率及安定段位分布如下图：</p>
+<img src="/2024/04/18/stable-dan-bayes/3ma_alpha300_1393hanchan.png" class="" width="400" title="alpha&#x3D;300时模拟出（对局结果的）各顺位率及安定段位分布">
+<p>标准差、百分位数等数据：</p>
+<table>
+<thead>
+<tr class="header">
+<th>对局结果顺位率</th>
+<th>10%</th>
+<th>中位数</th>
+<th>90%</th>
+<th>标准差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>凤桌1位率</td>
+<td>0.313</td>
+<td>0.335</td>
+<td>0.356</td>
+<td>0.0169</td>
+</tr>
+<tr class="even">
+<td>凤桌2位率</td>
+<td>0.309</td>
+<td>0.334</td>
+<td>0.356</td>
+<td>0.0185</td>
+</tr>
+<tr class="odd">
+<td>凤桌3位率</td>
+<td>0.308</td>
+<td>0.331</td>
+<td>0.354</td>
+<td>0.0187</td>
+</tr>
+<tr class="even">
+<td>alpha=300各顺位率</td>
+<td>0.307</td>
+<td>0.333</td>
+<td>0.360</td>
+<td>0.0202</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>对局结果安定段位</th>
+<th>10%</th>
+<th>中位数</th>
+<th>90%</th>
+<th>标准差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>凤桌</td>
+<td>6.09</td>
+<td>7.06</td>
+<td>8.19</td>
+<td>0.846</td>
+</tr>
+<tr class="even">
+<td>alpha=300</td>
+<td>5.87</td>
+<td>7.00</td>
+<td>8.29</td>
+<td>0.952</td>
+</tr>
+</tbody>
+</table>
+<h1 id="贝叶斯估计安定段位的例子">贝叶斯估计安定段位的例子</h1>
+<p>三凤南<span
+class="math inline">\(\boldsymbol{\alpha}\)</span>取300</p>
+<ul>
+<li><p>玩家A<span class="math inline">\(\boldsymbol{N} = (10, 5,
+0)\)</span>，即吃了10个1和5个2和0个3，（对局结果的）安定段位<span
+class="math inline">\(+\infty\)</span>，贝叶斯估计（真实水平的）安定段位中位数7.30，95%置信区间为5.94-8.90</p></li>
+<li><p>玩家B<span class="math inline">\(\boldsymbol{N} = (0, 5,
+10)\)</span>，（对局结果的）安定段位负2.00，贝叶斯估计（真实水平的）安定段位中位数6.71，95%置信区间为5.43-8.21</p></li>
+<li><p>玩家C<span class="math inline">\(\boldsymbol{N} = (333, 334,
+333)\)</span>，共1000半庄，（对局结果的）安定段位7.00，贝叶斯估计（真实水平的）安定段位中位数7.00，95%置信区间为6.06-8.05</p></li>
+<li><p>玩家D<span class="math inline">\(\boldsymbol{N} = (1000, 1000,
+1000)\)</span>，共3000半庄，（对局结果的）安定段位7.00，贝叶斯估计（真实水平的）安定段位中位数7.00，95%置信区间为6.33-7.72</p></li>
+<li><p>玩家E<span class="math inline">\(\boldsymbol{N} = (360, 342,
+324)\)</span>，共1026半庄，（对局结果的）安定段位8.00，贝叶斯估计（真实水平的）安定段位中位数7.52，95%置信区间为6.53-8.62</p></li>
+<li><p>玩家F<span class="math inline">\(\boldsymbol{N} = (1060, 1007,
+954)\)</span>，共3021半庄，（对局结果的）安定段位8.00，贝叶斯估计（真实水平的）安定段位中位数7.76，95%置信区间为7.04-8.54</p></li>
+<li><p>玩家G<span class="math inline">\(\boldsymbol{N} = (374, 340,
+306)\)</span>，共1020半庄，（对局结果的）安定段位9.00，贝叶斯估计（真实水平的）安定段位中位数8.01，95%置信区间为6.97-9.17</p></li>
+<li><p>玩家H<span class="math inline">\(\boldsymbol{N} = (1100, 1000,
+900)\)</span>，共3000半庄，（对局结果的）安定段位9.00，贝叶斯估计（真实水平的）安定段位中位数8.50，95%置信区间为7.72-9.34</p></li>
+<li><p>上述玩家E（千战安8）比玩家C（千战安7）更强的概率为76.1%，更弱的概率为23.9%</p></li>
+<li><p>玩家E（千战安8）比玩家D（三千战安7）更强的概率为79.5%，更弱的概率为20.5%</p></li>
+<li><p>玩家F（三千战安8）比玩家E（千战安8）更强的概率为64.3%，更弱的概率为35.7%</p></li>
+<li><p>玩家F（三千战安8）比玩家D（三千战安7）更强的概率为99.3%，更弱的概率为0.7%</p></li>
+<li><p>玩家I<span class="math inline">\(\boldsymbol{N} = (123, 107,
+63)\)</span>，共293半庄，（对局结果的）安定段位14.57，贝叶斯估计（真实水平的）安定段位中位数8.49，95%置信区间为7.12-10.07</p></li>
+<li><p>玩家J<span class="math inline">\(\boldsymbol{N} = (8876, 8495,
+7842)\)</span>，共25213半庄，（对局结果的）安定段位8.19，贝叶斯估计（真实水平的）安定段位中位数8.14，95%置信区间为7.85-8.45</p></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%97%A5%E9%BA%BB/" rel="tag"># 日麻</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/04/04/stable-dan/" rel="prev" title="关于安定段位的碎碎念">
+                  <i class="fa fa-chevron-left"></i> 关于安定段位的碎碎念
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">81100118</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
